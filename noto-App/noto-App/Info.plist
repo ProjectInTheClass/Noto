@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>UIAppFonts</key>
+	<array>
+		<string>Freesentation-1Thin.ttf</string>
+		<string>Freesentation-2ExtraLight.ttf</string>
+		<string>Freesentation-3Light.ttf</string>
+		<string>Freesentation-4Regular.ttf</string>
+		<string>Freesentation-5Medium.ttf</string>
+		<string>Freesentation-6SemiBold.ttf</string>
+		<string>Freesentation-7Bold.ttf</string>
+		<string>Freesentation-8ExtraBold.ttf</string>
+		<string>Freesentation-9Black.ttf</string>
+	</array>
+</dict>
+</plist>

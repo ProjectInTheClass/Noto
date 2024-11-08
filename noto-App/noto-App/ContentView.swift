@@ -1,61 +1,63 @@
-//
-//  ContentView.swift
-//  noto-App
-//
-//  Created by 진혁의 Macbook Pro on 11/8/24.
-//
-
 import SwiftUI
-import SwiftData
+
+// 폰트 목록을 출력하는 함수 정의
+func printAvailableFonts() {
+  // 폰트 체크 하기
+  UIFont.familyNames.sorted().forEach { familyName in
+    print("*** \(familyName) ***")
+    UIFont.fontNames(forFamilyName: familyName).forEach { fontName in
+      print("\(fontName)")
+    }
+    print("---------------------")
+  }
+}
 
 struct ContentView: View {
-    @Environment(\.modelContext) private var modelContext
-    @Query private var items: [Item]
-
     var body: some View {
-        NavigationSplitView {
-            List {
-                ForEach(items) { item in
-                    NavigationLink {
-                        Text("Item at \(item.timestamp, format: Date.FormatStyle(date: .numeric, time: .standard))")
-                    } label: {
-                        Text(item.timestamp, format: Date.FormatStyle(date: .numeric, time: .standard))
-                    }
-                }
-                .onDelete(perform: deleteItems)
-            }
-            .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    EditButton()
-                }
-                ToolbarItem {
-                    Button(action: addItem) {
-                        Label("Add Item", systemImage: "plus")
-                    }
-                }
-            }
-        } detail: {
-            Text("Select an item")
-        }
-    }
+        VStack(alignment: .leading, spacing: 10) {
+            Text("Freesentation-Thin")
+                .font(.custom("Freesentation-1Thin", size: 20))
+                .foregroundColor(.primary)
 
-    private func addItem() {
-        withAnimation {
-            let newItem = Item(timestamp: Date())
-            modelContext.insert(newItem)
-        }
-    }
+            Text("Freesentation-ExtraLight")
+                .font(.custom("Freesentation-2ExtraLight", size: 20))
+                .foregroundColor(.primary)
 
-    private func deleteItems(offsets: IndexSet) {
-        withAnimation {
-            for index in offsets {
-                modelContext.delete(items[index])
-            }
+            Text("Freesentation-Light")
+                .font(.custom("Freesentation-3Light", size: 20))
+                .foregroundColor(.primary)
+
+            Text("Freesentation-Regular")
+                .font(.custom("Freesentation-4Regular", size: 20))
+                .foregroundColor(.primary)
+
+            Text("Freesentation-Medium")
+                .font(.custom("Freesentation-5Medium", size: 20))
+                .foregroundColor(.primary)
+
+            Text("Freesentation-SemiBold")
+              .font(.custom("Freesentation-6SemiBold", size: 20))
+              .foregroundColor(.primary)
+          
+            Text("Freesentation-Bold")
+                .font(.custom("Freesentation-7Bold", size: 20))
+                .foregroundColor(.primary)
+          
+            Text("Freesentation-ExtraBold")
+              .font(.custom("Freesentation-8ExtraBold", size: 20))
+              .foregroundColor(.primary)
+
+            Text("Freesentation-Black")
+                .font(.custom("Freesentation-9Black", size: 20))
+                .foregroundColor(.primary)
         }
+        .padding()
     }
 }
 
-#Preview {
-    ContentView()
-        .modelContainer(for: Item.self, inMemory: true)
+struct ContentView_Previews: PreviewProvider {
+    static var previews: some View {
+        ContentView()
+            .previewLayout(.sizeThatFits)
+    }
 }
