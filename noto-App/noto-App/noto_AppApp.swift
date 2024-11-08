@@ -15,7 +15,7 @@ struct noto_AppApp: App {
             Item.self,
         ])
         let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
-
+        
         do {
             return try ModelContainer(for: schema, configurations: [modelConfiguration])
         } catch {
@@ -28,5 +28,6 @@ struct noto_AppApp: App {
             ContentView()
         }
         .modelContainer(sharedModelContainer)
+      
     }
 }
