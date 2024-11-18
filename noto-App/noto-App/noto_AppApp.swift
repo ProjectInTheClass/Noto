@@ -1,10 +1,3 @@
-//
-//  noto_AppApp.swift
-//  noto-App
-//
-//  Created by 진혁의 Macbook Pro on 11/8/24.
-//
-
 import SwiftUI
 import SwiftData
 

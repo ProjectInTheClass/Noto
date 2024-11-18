@@ -1,9 +1,10 @@
 import SwiftUI
 
+// 폰트 구조체 정의
 struct CurrentPageFont: ViewModifier {
   func body(content: Content) -> some View {
     content
-      .font(.custom("Freesentation-9Black", size: 30))
+      .font(.custom("Freesentation-7Bold", size: 30))
       .foregroundColor(.customBlue)
       .multilineTextAlignment(.leading)
       .lineSpacing(10)
@@ -68,6 +69,33 @@ struct EmphasizedFont: ViewModifier {
   }
 }
 
+// 컴포넌트 정의
+struct BackgroundComponent: ViewModifier {
+  func body(content: Content) -> some View {
+    content
+      .padding()
+      .frame(maxWidth: .infinity, maxHeight: .infinity) // 화면 크기에 맞게 확장
+      .background(Color.customBackgroundColor) // 배경색 설정
+      .edgesIgnoringSafeArea(.all) // 모든 영역에 적용
+  }
+  
+}
+
+struct BlockComponent: ViewModifier {
+  var height: CGFloat
+  var shadowColor: Color = .black.opacity(0.08) // 그림자 색상
+  
+  func body(content: Content) -> some View {
+    content
+      .padding()
+      .frame(maxWidth: .infinity)
+      .frame(height: height)
+      .background(Color.white)
+      .cornerRadius(20)
+      .shadow(color: shadowColor, radius: 4, x: 0, y: 0)
+  }
+}
+
 // 폰트 정의
 extension View {
   func currentPageFont() -> some View {
@@ -99,6 +127,21 @@ extension View {
 extension View {
   func actionButtonStyle() -> some View {
     self.modifier(ActionButtonStyle())
+  }
+}
+
+// 컴포넌트 정의
+extension View {
+  func backgroundStyle() -> some View {
+    self.modifier(BackgroundComponent())
+  }
+  
+  func blockStyle(
+    height: CGFloat
+  ) -> some View {
+    self.modifier(BlockComponent(
+      height: height
+    ))
   }
 }
 

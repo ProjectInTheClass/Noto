@@ -18,6 +18,8 @@
 		627078DE2CE30A660027FF09 /* styles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 627078DD2CE30A5D0027FF09 /* styles.swift */; };
 		627078E42CE30B020027FF09 /* FontTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 627078E32CE30B000027FF09 /* FontTest.swift */; };
 		627078E62CE30BD70027FF09 /* StyleTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 627078E52CE30BD30027FF09 /* StyleTest.swift */; };
+		627078E82CE31B750027FF09 /* ImageTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 627078E72CE31B720027FF09 /* ImageTest.swift */; };
+		627FFE872CEADE9D00DF70E8 /* ComponentTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 627FFE862CEADE9700DF70E8 /* ComponentTest.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,6 +55,8 @@
 		627078DD2CE30A5D0027FF09 /* styles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = styles.swift; sourceTree = "<group>"; };
 		627078E32CE30B000027FF09 /* FontTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontTest.swift; sourceTree = "<group>"; };
 		627078E52CE30BD30027FF09 /* StyleTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StyleTest.swift; sourceTree = "<group>"; };
+		627078E72CE31B720027FF09 /* ImageTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageTest.swift; sourceTree = "<group>"; };
+		627FFE862CEADE9700DF70E8 /* ComponentTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComponentTest.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -148,6 +152,8 @@
 		627078E22CE30AFA0027FF09 /* Test */ = {
 			isa = PBXGroup;
 			children = (
+				627FFE862CEADE9700DF70E8 /* ComponentTest.swift */,
+				627078E72CE31B720027FF09 /* ImageTest.swift */,
 				627078E52CE30BD30027FF09 /* StyleTest.swift */,
 				627078E32CE30B000027FF09 /* FontTest.swift */,
 			);
@@ -288,9 +294,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				1371F01E2CDDE0150034FC36 /* ContentView.swift in Sources */,
+				627FFE872CEADE9D00DF70E8 /* ComponentTest.swift in Sources */,
 				627078E62CE30BD70027FF09 /* StyleTest.swift in Sources */,
 				627078E42CE30B020027FF09 /* FontTest.swift in Sources */,
 				1371F0202CDDE0150034FC36 /* Item.swift in Sources */,
+				627078E82CE31B750027FF09 /* ImageTest.swift in Sources */,
 				1371F01C2CDDE0150034FC36 /* noto_AppApp.swift in Sources */,
 				627078DE2CE30A660027FF09 /* styles.swift in Sources */,
 			);
