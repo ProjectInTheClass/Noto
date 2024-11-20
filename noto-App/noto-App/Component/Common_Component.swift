@@ -1,13 +1,19 @@
 import SwiftUI
 
 // 컴포넌트 정의
+struct ScrollViewComponent: ViewModifier {
+  func body(content: Content) -> some View {
+    content
+      .frame(maxWidth: .infinity, maxHeight: .infinity)
+      .background(Color.customBackgroundColor)
+      .edgesIgnoringSafeArea(.all)
+  }
+}
+
 struct BackgroundComponent: ViewModifier {
   func body(content: Content) -> some View {
     content
       .padding()
-      .frame(maxWidth: .infinity, maxHeight: .infinity) // 화면 크기에 맞게 확장
-      .background(Color.customBackgroundColor) // 배경색 설정
-      .edgesIgnoringSafeArea(.all) // 모든 영역에 적용
   }
 }
 
@@ -24,6 +30,18 @@ struct BlockComponent: ViewModifier {
   }
 }
 
+// 헤더 컴포넌트
+struct headerComponent: View {
+  var body: some View {
+    VStack {
+      Image("Noto 로고")
+        .resizable()
+        .aspectRatio(20/9, contentMode: .fit)
+        .frame(width: 100)
+    }
+  }
+}
+
 // 리퀘스트 및 알림 컴포넌트
 struct requestComponent: View {
   @State var req_count: Int
@@ -37,7 +55,7 @@ struct requestComponent: View {
         Text("리퀘스트 및 알림")
           .titleFont()
           .frame(maxWidth: .infinity, alignment: .leading)
-          .padding(.leading, 15)
+          .padding(.leading, 20)
         Spacer()
         HStack(spacing: 5) {
           Text("\(req_count)")
@@ -51,7 +69,6 @@ struct requestComponent: View {
         .padding(.trailing, 15)
       }
     }
-    .padding()
     .frame(maxWidth: .infinity)
     .frame(height: 49)
     .background(Color.white)
@@ -106,27 +123,61 @@ struct rowComponent: View {
   var imageName: String
   var title: String
   var subtitle: String
+  var action: (String) -> Void
   
   var body: some View {
-    HStack {
-      Image(imageName)
-        .resizable()
-        .frame(width: 24, height: 24)
-        .padding(.trailing, 5)
-      VStack(alignment: .leading) {
-        Text(title)
-          .subTitleFont()
-        Text(subtitle)
-          .descriptionFont()
+    Button(action: {
+      action("Row component clicked")
+    }) {
+      HStack {
+        Image(imageName)
+          .resizable()
+          .frame(width: 24, height: 24)
+          .padding(.trailing, 5)
+        VStack(alignment: .leading) {
+          Text(title)
+            .subTitleFont()
+          Text(subtitle)
+            .descriptionFont()
+        }
       }
+      .frame(maxWidth: .infinity, alignment: .leading)
+      .padding(.leading, 20)
     }
-    .frame(maxWidth: .infinity, alignment: .leading)
-    .padding(.leading, 20)
+    }
+}
+
+// 블럭 컴포넌트 내에 모두 보기 버튼
+struct viewAllComponent: View {
+  var title: String
+  var action: (String) -> Void
+  
+  var body: some View {
+    Divider()
+      .padding(.top, 5)
+      .padding(.horizontal, 15)
+    Button(action: {
+      action("View-all button clicked")
+    }) {
+      HStack {
+        Text("\(title)")
+          .viewAllFont()
+        Image(systemName: "chevron.right")
+          .font(.system(size:10, weight: .medium))
+          .foregroundColor(.customLightGray)
+      }
+      .padding(.bottom, 10)
+      .frame(width: 300, height: 30)
+    }
   }
 }
 
 // 컴포넌트 정의
 extension View {
+  func scrollViewStyle() -> some View {
+    self.modifier(ScrollViewComponent())
+  }
+  
   func backgroundStyle() -> some View {
     self.modifier(BackgroundComponent())
   }

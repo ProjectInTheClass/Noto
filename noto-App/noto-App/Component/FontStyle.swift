@@ -60,6 +60,16 @@ struct DescriptionFont: ViewModifier {
   }
 }
 
+struct ViewAllFont: ViewModifier {
+  func body(content: Content) -> some View {
+    content
+      .font(.custom("Freesentation-5Medium", size: 13))
+      .foregroundColor(.customLightGray)
+      .multilineTextAlignment(.leading)
+      .lineSpacing(10)
+  }
+}
+
 struct EmphasizedFont: ViewModifier {
   func body(content: Content) -> some View {
     content
@@ -89,6 +99,10 @@ extension View {
   
   func descriptionFont() -> some View {
     self.modifier(DescriptionFont())
+  }
+  
+  func viewAllFont() -> some View {
+    self.modifier(ViewAllFont())
   }
   
   func emphasizeFont() -> some View {
