@@ -1,33 +1,39 @@
 import SwiftUI
 
+func test(_ comment: String) {
+  print(comment)
+}
+
+var imageName: String = "user"
+var title: String  = "메인화면 레이아웃 설계 및 구현"
+var title2: String = "오늘 내 할 일 모두 보기"
+var subtitle: String = "할 일 목록을 표시하는 메인 화면의 레이아웃을 설계하고 구현"
+var row_count: Int = 6
+
 struct ComponentTest_ContentView: View {
+  @State private var searchText = ""
   var body: some View {
+    ScrollView {
       VStack(spacing: 20) {
-        // 첫 번째 블럭: 사진 포함
-        Image(systemName: "photo")
-          .resizable()
-          .scaledToFit()
-          .blockStyle(height: 150) // 높이를 지정하여 블럭 생성
-
-        // 두 번째 블럭: 여러 텍스트 포함
-        VStack {
-          Text("This is a title")
-            .font(.headline)
-          Text("This is a description of the block.")
-            .font(.subheadline)
-            .foregroundColor(.gray)
+        headerComponent()
+        searchBar(searchText: $searchText, action: test)
+        requestComponent(req_count: 5, action: test)
+        VStack(spacing: 10) {
+          rowComponent(imageName: imageName, title: title, subtitle: subtitle, action: test)
+          rowComponent(imageName: imageName, title: title, subtitle: subtitle, action: test)
+          rowComponent(imageName: imageName, title: title, subtitle: subtitle, action: test)
+          rowComponent(imageName: imageName, title: title, subtitle: subtitle, action: test)
+          rowComponent(imageName: imageName, title: title, subtitle: subtitle, action: test)
+          rowComponent(imageName: imageName, title: title, subtitle: subtitle, action: test)
+          viewAllComponent(title: title2, action: test)
         }
-        .blockStyle(height: 120)
-
-        // 세 번째 블럭: 사용자 정의 콘텐츠
-        VStack {
-          Text("Custom Content")
-          Image(systemName: "star.fill")
-            .foregroundColor(.yellow)
-        }
-        .blockStyle(height: 180)
+        .frame(maxWidth: .infinity, alignment: .topLeading)
+        .padding(.top, 20)
+        .blockStyle(height: .infinity)
       }
       .backgroundStyle()
+    }
+    .scrollViewStyle()
   }
 }
 
