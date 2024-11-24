@@ -30,7 +30,7 @@ struct rowAddComponent: View {
   }
 }
 
-
+// 레퍼런스 모달 컴포넌트
 struct modalReferenceView: View {
     var body: some View {
         VStack {
@@ -47,8 +47,8 @@ struct modalReferenceView: View {
     }
 }
 
-// 일정 리스트 모달
-struct modalTodoListView: View {
+// 일정 리스트 모달 컴포넌트
+struct modalScheduleListView: View {
     var body: some View {
         VStack {
             rowComponent(imageName: imageName, title: title, subtitle: subtitle, action: test)
@@ -64,7 +64,7 @@ struct modalTodoListView: View {
     }
 }
 
-// 일정 리스트 모달
+// 프로젝트 리스트 모달 컴포넌트
 struct modalProjectListView: View {
     var body: some View {
         VStack(spacing: 20) {
@@ -83,6 +83,29 @@ struct modalProjectListView: View {
             .padding(.top)
             .padding(.bottom)
             .blockStyle(height: .infinity)
+        }
+        .modalPresentation()
+    }
+}
+
+// 일정 모달 컴포넌트
+struct modalScheduleView: View {
+    var action: (String) -> Void
+    
+    var body: some View {
+        VStack(spacing: 20) {
+            HStack {
+                Text("일정 생성")
+                    .titleFont()
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                Button(action: {
+                    action("modalScheduleView complete component clicked")
+                }) {
+                    Text("완료")
+                        .frame(maxWidth: .infinity, alignment: .trailing)
+                }
+            }
+            Divider()
         }
         .modalPresentation()
     }
