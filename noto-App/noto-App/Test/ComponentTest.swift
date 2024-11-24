@@ -11,29 +11,21 @@ var subtitle: String = "할 일 목록을 표시하는 메인 화면의 레이�
 var row_count: Int = 6
 
 struct ComponentTest_ContentView: View {
-  @State private var searchText = ""
+  @State private var selectedTab: Tab = .home
+  
   var body: some View {
-    ScrollView {
-      VStack(spacing: 20) {
-        headerComponent()
-        searchBar(searchText: $searchText, action: test)
-        requestComponent(req_count: 5, action: test)
-        VStack(spacing: 10) {
-          rowComponent(imageName: imageName, title: title, subtitle: subtitle, action: test)
-          rowComponent(imageName: imageName, title: title, subtitle: subtitle, action: test)
-          rowComponent(imageName: imageName, title: title, subtitle: subtitle, action: test)
-          rowComponent(imageName: imageName, title: title, subtitle: subtitle, action: test)
-          rowComponent(imageName: imageName, title: title, subtitle: subtitle, action: test)
-          rowComponent(imageName: imageName, title: title, subtitle: subtitle, action: test)
-          viewAllComponent(title: title2, action: test)
-        }
-        .frame(maxWidth: .infinity, alignment: .topLeading)
-        .padding(.top, 20)
-        .blockStyle(height: .infinity)
-      }
-      .backgroundStyle()
+    TabView(selection: $selectedTab) {
+      SettingsView()
+        .tabItem { Image(systemName: "gear") }
+        .tag(Tab.settings)
+      HomeView(selectedTab: $selectedTab)
+        .tabItem { Image(systemName: "house") }
+        .tag(Tab.home)
+      ProjectSelectionView()
+        .tabItem { Image(systemName: "folder") }
+        .tag(Tab.projects)
     }
-    .scrollViewStyle()
+    .background(Color.white)
   }
 }
 
@@ -43,3 +35,53 @@ struct ComponentTest_ContentView_Preview: PreviewProvider {
   }
 }
 
+struct SettingsView: View {
+    var body: some View {
+        VStack {
+            Text("Settings Screen")
+                .font(.largeTitle)
+                .padding()
+        }
+    }
+}
+
+struct HomeView: View {
+  @State private var searchText = ""
+  @Binding var selectedTab: Tab
+  
+  var body: some View {
+    VStack{
+      ScrollView {
+        VStack(spacing: 20) {
+          headerComponent()
+          searchBar(searchText: $searchText, action: test)
+          requestComponent(req_count: 5, action: test)
+          VStack(spacing: 10) {
+            rowComponent(imageName: imageName, title: title, subtitle: subtitle, action: test)
+            rowComponent(imageName: imageName, title: title, subtitle: subtitle, action: test)
+            rowComponent(imageName: imageName, title: title, subtitle: subtitle, action: test)
+            rowComponent(imageName: imageName, title: title, subtitle: subtitle, action: test)
+            rowComponent(imageName: imageName, title: title, subtitle: subtitle, action: test)
+            rowComponent(imageName: imageName, title: title, subtitle: subtitle, action: test)
+            viewAllComponent(title: title2, action: test)
+          }
+          .frame(maxWidth: .infinity, alignment: .topLeading)
+          .padding(.top, 20)
+          .blockStyle(height: .infinity)
+        }
+        .backgroundStyle()
+      }
+      .scrollViewStyle()
+    }
+  }
+}
+
+struct ProjectSelectionView: View {
+    var body: some View {
+        VStack {
+            Text("Projects Screen")
+                .font(.largeTitle)
+                .padding()
+        }
+    }
+}

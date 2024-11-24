@@ -36,12 +36,76 @@ struct headerComponent: View {
     VStack {
       Image("Noto 로고")
         .resizable()
-        .aspectRatio(20/9, contentMode: .fit)
-        .frame(width: 100)
+        .scaledToFit()
+        .frame(width: 120)
     }
+    .frame(width: .infinity, height: 96, alignment: .bottom)
   }
 }
 
+// 네비게이션바 컴포넌트
+enum Tab {
+  case settings, home, projects
+}
+
+struct navigationBar: View {
+  @Binding var selectedTab: Tab
+  
+  var body: some View {
+    HStack {
+      Spacer()
+      Button(action: { selectedTab = .settings }) {
+        settingMenuIcon()
+      }
+      Spacer(minLength: 100)
+      Button(action: { selectedTab = .home }) {
+        homeMenuIcon()
+      }
+      Spacer(minLength: 100)
+      Button(action: { selectedTab = .projects }) {
+        projectMenuIcon()
+      }
+      Spacer()
+    }
+    .background(Color.white)
+    .frame(width: .infinity, height: 50)
+  }
+}
+
+
+struct DetailView: View {
+  var body: some View {
+    VStack {
+      Text("Detail Screen")
+        .font(.largeTitle)
+    }
+    .navigationTitle("Detail")
+  }
+}
+
+struct settingMenuIcon: View {
+  var body: some View {
+    Image(systemName: "gearshape")
+      .font(.system(size: 32, weight: .medium))
+      .foregroundColor(.customLightGray)
+  }
+}
+
+struct homeMenuIcon: View {
+  var body: some View {
+    Image(systemName: "house")
+      .font(.system(size: 32, weight: .medium))
+      .foregroundColor(.customLightGray)
+  }
+}
+
+struct projectMenuIcon: View {
+  var body: some View {
+    Image(systemName: "square.grid.2x2")
+      .font(.system(size: 32, weight: .medium))
+      .foregroundColor(.customLightGray)
+  }
+}
 // 리퀘스트 및 알림 컴포넌트
 struct requestComponent: View {
   @State var req_count: Int
