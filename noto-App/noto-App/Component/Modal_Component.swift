@@ -77,7 +77,7 @@ struct modalProjectListView: View {
                 rowComponent(imageName: imageName, title: title, subtitle: subtitle, action: test)
                 rowComponent(imageName: imageName, title: title, subtitle: subtitle, action: test)
                 Divider()
-                rowAddComponent(action: test)
+                //rowAddComponent(action: test)
             }
             .frame(maxWidth: .infinity, alignment: .center)
             .padding(.top)

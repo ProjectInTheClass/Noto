@@ -1,7 +1,7 @@
 import SwiftUI
 
 // inner는 추후 삭제
-enum Screen { case settings, user, pw, alarm, display, inner }
+enum Screen { case settings, user, pw, alarm, display, client, faq, info }
 
 struct SettingPage_ContentView: View {
   @State private var currentScreen: Screen = .settings
@@ -14,7 +14,7 @@ struct SettingPage_ContentView: View {
         InnerView(onGoBack: {
           currentScreen = .settings
         }, onCompletion: {
-          test("Completion button clicked")
+          //test("Completion button clicked")
         })
       }
     }
@@ -48,22 +48,22 @@ struct SettingPage: View {
             .blockStyle(height: .infinity)
           
           VStack(spacing: 10) {
-            settingRow(imageName: "locked", title: "비밀번호 변경", action: test)
+            settingRow(imageName: "locked", title: "비밀번호 변경", action: { currentScreen = .pw })
             Divider()
-            settingRow(imageName: "bell-ring", title: "알림 설정", action: test)
+            settingRow(imageName: "bell-ring", title: "알림 설정", action: { currentScreen = .alarm})
             Divider()
-            settingRow(imageName: "monitor", title: "다크 모드/라이트 모드 설정", action: test)
+            settingRow(imageName: "monitor", title: "다크 모드/라이트 모드 설정", action: { currentScreen = .display})
           }
           .padding()
           .frame(maxWidth: .infinity, alignment: .leading)
           .blockStyle(height: .infinity)
           
           VStack(spacing: 10) {
-            settingRow(imageName: "client", title: "고객 지원", action: test)
+            settingRow(imageName: "client", title: "고객 지원", action: { currentScreen = .client})
             Divider()
-            settingRow(imageName: "faq", title: "FAQ", action: test)
+            settingRow(imageName: "faq", title: "FAQ", action: { currentScreen = .faq })
             Divider()
-            settingRow(imageName: "info", title: "이용약관 및 개인정보처리방침", action: test)
+            settingRow(imageName: "info", title: "이용약관 및 개인정보처리방침", action: { currentScreen = .info})
           }
           .padding()
           .frame(maxWidth: .infinity, alignment: .leading)

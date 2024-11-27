@@ -26,11 +26,11 @@ struct barGraphComponent: View {
 struct simpleProgressRow: View {
   var progress: Double
   var Dday : Int
-  var action: (String) -> Void
+  var action: () -> Void
   
   var body: some View {
     Button(action: {
-      action("개별 프로젝트 진행률 클릭")
+      action()
     }) {
       VStack(alignment: .leading) {
         HStack {
