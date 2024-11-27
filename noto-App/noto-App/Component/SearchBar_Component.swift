@@ -3,7 +3,7 @@ import SwiftUI
 // 검색창 컴포넌트
 struct searchBar: View {
   @Binding var searchText: String
-  var action: (String) -> Void
+  var action: () -> Void
   var placeholder: String = "검색"
   
   var body: some View {

@@ -33,14 +33,14 @@ struct BlockStyle: ViewModifier {
 // 블럭 컴포넌트 내에 모두 보기 버튼
 struct viewAllComponent: View {
   var title: String
-  var action: (String) -> Void
+  var action: () -> Void
   
   var body: some View {
     Divider()
       .padding(.top, 5)
       .padding(.horizontal, 15)
     Button(action: {
-      action("View-all button clicked")
+      action()
     }) {
       HStack {
         Text("\(title)")

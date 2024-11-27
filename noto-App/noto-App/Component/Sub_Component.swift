@@ -5,11 +5,11 @@ struct rowComponent: View {
   var imageName: String
   var title: String
   var subtitle: String
-  var action: (String) -> Void
+  var action: () -> Void
   
   var body: some View {
     Button(action: {
-      action("Row component clicked")
+      action()
     }) {
       HStack {
         Image(imageName)
@@ -63,11 +63,11 @@ struct userInfoRow: View {
 struct settingRow: View {
   var imageName: String
   var title: String
-  var action: (String) -> Void
+  var action: () -> Void
   
   var body: some View {
     Button(action: {
-      action("설정 탭의 버튼 클릭")
+      action()
     }) {
       HStack {
         Image(imageName)

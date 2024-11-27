@@ -1,7 +1,7 @@
 import SwiftUI
 
-func test(_ comment: String) {
-  print(comment)
+func test() {
+  print("테스트")
 }
 func goBackTest() {
   
@@ -47,18 +47,18 @@ struct SettingsView: View {
             .font(.largeTitle)
             .padding()
         Button(action: {
-          currentScreen = .inner
+          //currentScreen = .inner
         }){
           Text("Go to inner screen")
             .font(.headline)
             .padding()
         }
-      } else if currentScreen == .inner {
-        InnerView(onGoBack: {
-          currentScreen = .settings
-        }, onCompletion: {
-          test("Completion button clicked")
-        })
+      //} else if currentScreen == .inner {
+       // InnerView(onGoBack: {
+        //  currentScreen = .settings
+        //}, onCompletion: {
+          //test("Completion button clicked")
+        //})
       }
     }
   }
@@ -87,7 +87,7 @@ struct HomeView: View {
       ScrollView {
         VStack(spacing: 20) {
           mainHeader()
-          searchBar(searchText: $searchText, action: test)
+          //searchBar(searchText: $searchText, action: test)
           //requestComponent(req_count: 5, action: test)
           VStack(spacing: 10) {
             rowComponent(imageName: imageName, title: title, subtitle: subtitle, action: test)
@@ -96,7 +96,7 @@ struct HomeView: View {
             rowComponent(imageName: imageName, title: title, subtitle: subtitle, action: test)
             rowComponent(imageName: imageName, title: title, subtitle: subtitle, action: test)
             rowComponent(imageName: imageName, title: title, subtitle: subtitle, action: test)
-            viewAllComponent(title: title2, action: test)
+            //viewAllComponent(title: title2, action: test)
           }
           .frame(maxWidth: .infinity, alignment: .topLeading)
           .padding(.top, 20)

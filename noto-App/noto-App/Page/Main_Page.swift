@@ -1,7 +1,7 @@
 import SwiftUI
 
-enum Tab { case settings, home, projects}
-
+enum Tab { case settings, home, projects }
+enum Page { case main, requestList, todoDetail }
 
 struct MainPage_ContentView: View {
   @State private var selectedTab: Tab = .home
@@ -28,11 +28,9 @@ struct MainPage_ContentView_Preview: PreviewProvider {
   }
 }
 
-enum mainPageScreen { case main, request }
-
 struct mainPage: View {
   @State private var searchText = ""
-  @State private var currentScreen: mainPageScreen = .main
+  @State private var currentScreen: Page = .main
   @Binding var selectedTab: Tab
   
   var body: some View {
@@ -42,15 +40,10 @@ struct mainPage: View {
           VStack(spacing: 20) {
             mainHeader()
             searchBar(searchText: $searchText, action: test)
-            requestComponent(req_count: 5, action: { currentScreen = .request })
+            requestComponent(req_count: 5, action: { currentScreen = .requestList })
             
             VStack(spacing: 10) {
-              rowComponent(imageName: imageName, title: title, subtitle: subtitle, action: test)
-              rowComponent(imageName: imageName, title: title, subtitle: subtitle, action: test)
-              rowComponent(imageName: imageName, title: title, subtitle: subtitle, action: test)
-              rowComponent(imageName: imageName, title: title, subtitle: subtitle, action: test)
-              rowComponent(imageName: imageName, title: title, subtitle: subtitle, action: test)
-              rowComponent(imageName: imageName, title: title, subtitle: subtitle, action: test)
+              rowComponent(imageName: imageName, title: title, subtitle: subtitle, action: {print("버튼 클릭")})
               viewAllComponent(title: "오늘 내 할 일 모두 보기", action: test)
             }
             .frame(maxWidth: .infinity, alignment: .topLeading)
@@ -70,7 +63,7 @@ struct mainPage: View {
           .backgroundStyle()
         }
         .scrollViewStyle()
-      } else if(currentScreen == .request) {
+      } else if(currentScreen == .requestList) {
         RequestPage(currentScreen: $currentScreen)
       }
     }
