@@ -7,21 +7,6 @@ struct RequestPage_ContentView: View {
   }
 }
 
-// Request 모델
-struct Request: Identifiable {
-  let id = UUID() // 고유 ID
-  let sender: String
-  let title: String
-}
-
-// 요청 데이터
-let requests: [Request] = [
-  Request(sender: "Alice", title: "Project Approval"),
-  Request(sender: "Bob", title: "Budget Increase"),
-  Request(sender: "Charlie", title: "New Feature Request"),
-  Request(sender: "Diana", title: "Code Review Request")
-]
-
 struct RequestPage_ContentView_Preview: PreviewProvider {
   static var previews: some View {
     RequestPage_ContentView()
@@ -38,14 +23,22 @@ struct RequestPage: View {
         VStack(spacing: 15) {
           mainHeader()
           requestHeader(onGoBack: {currentScreen = .main}, addAction: {print("수정 필요")})
-          VStack{
-            List(requests) { request in
+          
+          VStack(spacing: 10){
+            Spacer()
+            ForEach(requests.indices, id: \.self) { index in
               HStack {
-                rowComponent(imageName: "check", title: request.title, subtitle: request.sender, action: {currentScreen = .todoDetail})
+                let request = requests[index]
+                rowComponent(imageName: "check", title: request.title, subtitle: request.subtitle, action: {print("모달 나오게 수정")})
+              }
+              if index < requests.count - 1 {
+                Divider()
               }
             }
+            Spacer()
           }
-          .blockStyle(height: 1000)
+          .blockStyle(height: .infinity)
+          
         }
         .backgroundStyle()
       }

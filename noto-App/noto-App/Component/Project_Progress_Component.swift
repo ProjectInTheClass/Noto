@@ -24,6 +24,7 @@ struct barGraphComponent: View {
 }
 
 struct simpleProgressRow: View {
+  var title: String
   var progress: Double
   var Dday : Int
   var action: () -> Void
@@ -37,7 +38,7 @@ struct simpleProgressRow: View {
           imageComponent(imageName: "projectImage", shape: .rectangle, size: 20)
             .padding(.trailing, 5)
           
-          Text("IOS Todo 앱 개발")
+          Text(title)
             .font(.custom("Freesentation-7Bold", size: 15))
             .foregroundColor(.customBlack)
           
@@ -47,7 +48,7 @@ struct simpleProgressRow: View {
             .padding(.trailing, 5)
         }
         HStack {
-          barGraphComponent(progress: 0.5, width: 335, height: 12)
+          barGraphComponent(progress: progress, width: 335, height: 12)
         }
       }
       .padding(.horizontal, 20)

@@ -50,6 +50,14 @@ struct InnerTabFont: ViewModifier {
   }
 }
 
+struct ProjectContnentFont: ViewModifier {
+  func body(content: Content) -> some View {
+    content
+      .font(.custom("Freesentation-6SemiBold", size: 13))
+      .foregroundColor(.customDarkGray)
+  }
+}
+
 struct DescriptionFont: ViewModifier {
   func body(content: Content) -> some View {
     content
@@ -107,6 +115,10 @@ extension View {
   
   func emphasizeFont() -> some View {
     self.modifier(EmphasizedFont())
+  }
+  
+  func projectContentFont() -> some View {
+    self.modifier(ProjectContnentFont())
   }
 }
 

@@ -32,6 +32,12 @@
 		627FFE872CEADE9D00DF70E8 /* ComponentTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 627FFE862CEADE9700DF70E8 /* ComponentTest.swift */; };
 		627FFE9C2CEC295100DF70E8 /* FontStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 627FFE9B2CEC294E00DF70E8 /* FontStyle.swift */; };
 		627FFE9E2CEC299700DF70E8 /* Frame_Component.swift in Sources */ = {isa = PBXBuildFile; fileRef = 627FFE9D2CEC299300DF70E8 /* Frame_Component.swift */; };
+		62D1EA5F2CFD80F6005801F6 /* Request_DataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62D1EA5E2CFD80F1005801F6 /* Request_DataModel.swift */; };
+		62D1EA612CFD813D005801F6 /* Todo_DataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62D1EA602CFD8130005801F6 /* Todo_DataModel.swift */; };
+		62D1EA632CFD8865005801F6 /* TodoDetail_Page.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62D1EA622CFD8852005801F6 /* TodoDetail_Page.swift */; };
+		62D1EA662CFD9779005801F6 /* Person_DataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62D1EA652CFD9775005801F6 /* Person_DataModel.swift */; };
+		62D1EA682CFDA6B1005801F6 /* Project_DataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62D1EA672CFDA6AC005801F6 /* Project_DataModel.swift */; };
+		62D1EA6A2CFDA962005801F6 /* ProgressList_Page.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62D1EA692CFDA95B005801F6 /* ProgressList_Page.swift */; };
 		7D8261FA2CEC45D60045913B /* ModalTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D8261F92CEC45D10045913B /* ModalTest.swift */; };
 		7D8261FC2CED8A210045913B /* Modal_Component.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D8261FB2CED8A100045913B /* Modal_Component.swift */; };
 		7D8261FE2CED92C80045913B /* ComboboxTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D8261FD2CED92AF0045913B /* ComboboxTest.swift */; };
@@ -84,6 +90,12 @@
 		627FFE862CEADE9700DF70E8 /* ComponentTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComponentTest.swift; sourceTree = "<group>"; };
 		627FFE9B2CEC294E00DF70E8 /* FontStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontStyle.swift; sourceTree = "<group>"; };
 		627FFE9D2CEC299300DF70E8 /* Frame_Component.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Frame_Component.swift; sourceTree = "<group>"; };
+		62D1EA5E2CFD80F1005801F6 /* Request_DataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Request_DataModel.swift; sourceTree = "<group>"; };
+		62D1EA602CFD8130005801F6 /* Todo_DataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Todo_DataModel.swift; sourceTree = "<group>"; };
+		62D1EA622CFD8852005801F6 /* TodoDetail_Page.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoDetail_Page.swift; sourceTree = "<group>"; };
+		62D1EA652CFD9775005801F6 /* Person_DataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Person_DataModel.swift; sourceTree = "<group>"; };
+		62D1EA672CFDA6AC005801F6 /* Project_DataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Project_DataModel.swift; sourceTree = "<group>"; };
+		62D1EA692CFDA95B005801F6 /* ProgressList_Page.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressList_Page.swift; sourceTree = "<group>"; };
 		7D8261F92CEC45D10045913B /* ModalTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModalTest.swift; sourceTree = "<group>"; };
 		7D8261FB2CED8A100045913B /* Modal_Component.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Modal_Component.swift; sourceTree = "<group>"; };
 		7D8261FD2CED92AF0045913B /* ComboboxTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComboboxTest.swift; sourceTree = "<group>"; };
@@ -141,6 +153,7 @@
 		1371F01A2CDDE0150034FC36 /* noto-App */ = {
 			isa = PBXGroup;
 			children = (
+				62D1EA5D2CFD80D8005801F6 /* DataModel */,
 				621B9BCD2CF4448F00451367 /* Page */,
 				627FFE9A2CEC293800DF70E8 /* Component */,
 				627078E22CE30AFA0027FF09 /* Test */,
@@ -192,6 +205,8 @@
 		621B9BCD2CF4448F00451367 /* Page */ = {
 			isa = PBXGroup;
 			children = (
+				62D1EA692CFDA95B005801F6 /* ProgressList_Page.swift */,
+				62D1EA622CFD8852005801F6 /* TodoDetail_Page.swift */,
 				621B9BDC2CF47F2700451367 /* Request_Page.swift */,
 				621B9BDA2CF474FD00451367 /* Setting_Page.swift */,
 				621B9BD62CF46B5300451367 /* Main_Page.swift */,
@@ -227,6 +242,17 @@
 				627FFE9D2CEC299300DF70E8 /* Frame_Component.swift */,
 			);
 			path = Component;
+			sourceTree = "<group>";
+		};
+		62D1EA5D2CFD80D8005801F6 /* DataModel */ = {
+			isa = PBXGroup;
+			children = (
+				62D1EA672CFDA6AC005801F6 /* Project_DataModel.swift */,
+				62D1EA652CFD9775005801F6 /* Person_DataModel.swift */,
+				62D1EA602CFD8130005801F6 /* Todo_DataModel.swift */,
+				62D1EA5E2CFD80F1005801F6 /* Request_DataModel.swift */,
+			);
+			path = DataModel;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -368,15 +394,21 @@
 				621B9BD72CF46B5800451367 /* Main_Page.swift in Sources */,
 				627FFE9C2CEC295100DF70E8 /* FontStyle.swift in Sources */,
 				621B9BD22CF466B500451367 /* RequestTest.swift in Sources */,
+				62D1EA612CFD813D005801F6 /* Todo_DataModel.swift in Sources */,
 				7D8261FA2CEC45D60045913B /* ModalTest.swift in Sources */,
 				627078E62CE30BD70027FF09 /* StyleTest.swift in Sources */,
 				621B9BD92CF46C5100451367 /* Project_Progress_Component.swift in Sources */,
 				627078E42CE30B020027FF09 /* FontTest.swift in Sources */,
+				62D1EA632CFD8865005801F6 /* TodoDetail_Page.swift in Sources */,
 				7D8261FC2CED8A210045913B /* Modal_Component.swift in Sources */,
+				62D1EA662CFD9779005801F6 /* Person_DataModel.swift in Sources */,
 				627FFE9E2CEC299700DF70E8 /* Frame_Component.swift in Sources */,
 				1371F0202CDDE0150034FC36 /* Item.swift in Sources */,
 				627078E82CE31B750027FF09 /* SubComponentTest.swift in Sources */,
 				621B9BDD2CF47F2C00451367 /* Request_Page.swift in Sources */,
+				62D1EA6A2CFDA962005801F6 /* ProgressList_Page.swift in Sources */,
+				62D1EA5F2CFD80F6005801F6 /* Request_DataModel.swift in Sources */,
+				62D1EA682CFDA6B1005801F6 /* Project_DataModel.swift in Sources */,
 				1371F01C2CDDE0150034FC36 /* noto_AppApp.swift in Sources */,
 				621B9BD52CF46B3B00451367 /* Sub_Component.swift in Sources */,
 				621B9BC92CF4440800451367 /* Request_Component.swift in Sources */,

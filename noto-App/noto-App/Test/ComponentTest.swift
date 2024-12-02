@@ -72,7 +72,7 @@ struct InnerView: View {
       Text("Inner Screen")
         .font(.largeTitle)
         .padding()
-      goBackHeader(action: onGoBack)
+      //goBackHeader(action: onGoBack)
       goBackCompletionHeader(goBackAction: onGoBack, completionAction: onCompletion)
     }
   }
