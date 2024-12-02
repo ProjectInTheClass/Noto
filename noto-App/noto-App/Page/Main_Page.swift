@@ -41,7 +41,7 @@ struct mainPage: View {
         ScrollView {
           VStack(spacing: 20) {
             mainHeader()
-            searchBar(searchText: $searchText, action: test)
+            searchBar(searchText: $searchText, action: {print("검색창 클릭 수정 필요")})
             requestComponent(req_count: 5, action: { currentScreen = .requestList })
             
             VStack(spacing: 10) {
@@ -96,4 +96,14 @@ struct mainPage: View {
       }
     }
   }
+}
+
+struct ProjectSelectionView: View {
+    var body: some View {
+        VStack {
+            Text("Projects Screen")
+                .font(.largeTitle)
+                .padding()
+        }
+    }
 }
