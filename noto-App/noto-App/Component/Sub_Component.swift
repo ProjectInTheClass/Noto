@@ -19,12 +19,16 @@ struct rowComponent: View {
         VStack(alignment: .leading) {
           Text(title)
             .subTitleFont()
+            .lineLimit(1)
+            .truncationMode(.tail)
           Text(subtitle)
             .descriptionFont()
+            .lineLimit(1)
+            .truncationMode(.tail)
         }
       }
       .frame(maxWidth: .infinity, alignment: .leading)
-      .padding(.leading, 20)
+      .padding(.horizontal, 20)
     }
   }
 }

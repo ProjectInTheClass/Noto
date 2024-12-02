@@ -23,7 +23,7 @@ struct BlockStyle: ViewModifier {
   func body(content: Content) -> some View {
     content
       .frame(maxWidth: 380)
-      .frame(height: height)
+      .frame(maxHeight: height)
       .background(Color.white)
       .cornerRadius(20)
       .shadow(color: Color.customShadownColor, radius: 4, x: 0, y: 0)

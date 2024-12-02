@@ -13,6 +13,13 @@ struct mainHeader: View {
   }
 }
 
+struct dumyHeader: View {
+  var body: some View {
+    VStack {}
+      .frame(width: 120, height: 60)
+  }
+}
+
 struct currentPageHeader: View {
   var currentPage: String
   
@@ -28,12 +35,11 @@ struct currentPageHeader: View {
 }
 
 struct goBackHeader: View {
-  var action: () -> Void
+  var goBackAction: () -> Void
   var body: some View {
     HStack {
       Button(action: {
-        print("goBack button clicked")
-        action()
+        goBackAction()
       }) {
         Text("뒤로 가기")
           .actionButtonStyle()

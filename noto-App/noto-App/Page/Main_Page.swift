@@ -1,7 +1,7 @@
 import SwiftUI
 
 enum Tab { case settings, home, projects }
-enum Page { case main, requestList, todoDetail }
+enum Page { case main, requestList, todoDetail, progressList }
 
 struct MainPage_ContentView: View {
   @State private var selectedTab: Tab = .home
@@ -31,7 +31,9 @@ struct MainPage_ContentView_Preview: PreviewProvider {
 struct mainPage: View {
   @State private var searchText = ""
   @State private var currentScreen: Page = .main
+  @State private var clickedIndex: Int? = 0
   @Binding var selectedTab: Tab
+  
   
   var body: some View {
     VStack{
@@ -43,17 +45,39 @@ struct mainPage: View {
             requestComponent(req_count: 5, action: { currentScreen = .requestList })
             
             VStack(spacing: 10) {
-              rowComponent(imageName: imageName, title: title, subtitle: subtitle, action: {print("버튼 클릭")})
-              viewAllComponent(title: "오늘 내 할 일 모두 보기", action: test)
+              Spacer()
+              ForEach(todolist.indices, id: \.self) { index in
+                HStack {
+                  let todo = todolist[index]
+                  rowComponent(
+                    imageName: todo.imageName,
+                    title: todo.title,
+                    subtitle: todo.subtitle,
+                    action: {
+                      currentScreen = .todoDetail
+                      clickedIndex = index // 클릭된 인덱스 저장
+                    }
+                  )
+                }
+                if index < todolist.count - 1 {
+                  Divider()
+                    .padding(.horizontal, 20)
+                }
+              }
+              Spacer()
             }
-            .frame(maxWidth: .infinity, alignment: .topLeading)
-            .padding(.top, 20)
             .blockStyle(height: .infinity)
             
             VStack(spacing: 10) {
-              simpleProgressRow(progress: 0.5, Dday: 48, action: test)
-              simpleProgressRow(progress: 0.7, Dday: 30, action: test)
-              viewAllComponent(title: "프로젝트 진행 현황 모두 보기", action: test)
+              ForEach(projectList.indices, id: \.self) { index in
+                simpleProgressRow(title: projectList[index].name,
+                                  progress: projectList[index].progress,
+                                  Dday: calculateDDay(from: projectList[index].startDate, to: projectList[index].endDate),
+                                  action: { print("프로젝트 클릭 수정 필요")
+                                            clickedIndex = index})
+              }
+              
+              viewAllComponent(title: "프로젝트 진행 현황 모두 보기", action: {currentScreen = .progressList})
             }
             .frame(maxWidth: .infinity, alignment: .topLeading)
             .padding(.top, 20)
@@ -65,6 +89,10 @@ struct mainPage: View {
         .scrollViewStyle()
       } else if(currentScreen == .requestList) {
         RequestPage(currentScreen: $currentScreen)
+      } else if(currentScreen == .todoDetail) {
+        TodoDetialPage(currentScreen: $currentScreen, prevScreen: .main, index: clickedIndex ?? 0)
+      } else if(currentScreen == .progressList) {
+        ProgressDetailPage(currentScreen: $currentScreen, prevScreen: .main, index: clickedIndex ?? 0)
       }
     }
   }
