@@ -11,11 +11,7 @@ struct SettingPage_ContentView: View {
       if currentScreen == .settings {
         SettingPage()
       } else if currentScreen == .user {
-        InnerView(onGoBack: {
-          currentScreen = .settings
-        }, onCompletion: {
-          //test("Completion button clicked")
-        })
+        
       }
     }
   }
@@ -40,7 +36,7 @@ struct SettingPage: View {
       ScrollView {
         VStack(spacing: 15){
           currentPageHeader(currentPage: "설정")
-          searchBar(searchText: $searchText, action: test)
+          searchBar(searchText: $searchText, action: {print("검색창 클릭 수정 필요")})
           
           userInfoRow(userImage: userProfile, userName: userName, userEmail: userEmail, action: { currentScreen = .user })
             .padding()

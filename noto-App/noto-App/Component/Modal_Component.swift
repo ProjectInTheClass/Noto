@@ -51,13 +51,13 @@ struct modalReferenceView: View {
 struct modalScheduleListView: View {
     var body: some View {
         VStack {
+            /*rowComponent(imageName: imageName, title: title, subtitle: subtitle, action: test)
             rowComponent(imageName: imageName, title: title, subtitle: subtitle, action: test)
             rowComponent(imageName: imageName, title: title, subtitle: subtitle, action: test)
             rowComponent(imageName: imageName, title: title, subtitle: subtitle, action: test)
             rowComponent(imageName: imageName, title: title, subtitle: subtitle, action: test)
             rowComponent(imageName: imageName, title: title, subtitle: subtitle, action: test)
-            rowComponent(imageName: imageName, title: title, subtitle: subtitle, action: test)
-            rowComponent(imageName: imageName, title: title, subtitle: subtitle, action: test)
+            rowComponent(imageName: imageName, title: title, subtitle: subtitle, action: test)*/
             
         }
         .modalPresentation()
@@ -69,13 +69,13 @@ struct modalProjectListView: View {
     var body: some View {
         VStack(spacing: 20) {
             VStack(spacing: 10) {
+                /*rowComponent(imageName: imageName, title: title, subtitle: subtitle, action: test)
                 rowComponent(imageName: imageName, title: title, subtitle: subtitle, action: test)
                 rowComponent(imageName: imageName, title: title, subtitle: subtitle, action: test)
                 rowComponent(imageName: imageName, title: title, subtitle: subtitle, action: test)
                 rowComponent(imageName: imageName, title: title, subtitle: subtitle, action: test)
                 rowComponent(imageName: imageName, title: title, subtitle: subtitle, action: test)
-                rowComponent(imageName: imageName, title: title, subtitle: subtitle, action: test)
-                rowComponent(imageName: imageName, title: title, subtitle: subtitle, action: test)
+                rowComponent(imageName: imageName, title: title, subtitle: subtitle, action: test)*/
                 Divider()
                 //rowAddComponent(action: test)
             }
