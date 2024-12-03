@@ -1,7 +1,7 @@
 import SwiftUI
 
 enum Tab { case settings, home, projects }
-enum Page { case main, requestList, todoDetail, progressList }
+enum Page { case main, requestList, todoDetail, progressList, todoList, projectDetail }
 
 struct MainPage_ContentView: View {
   @State private var selectedTab: Tab = .home
@@ -64,7 +64,7 @@ struct mainPage: View {
                     .padding(.horizontal, 20)
                 }
               }
-              Spacer()
+              viewAllComponent(title: "오늘 내 할 일 모두 보기", action: {currentScreen = .progressList})
             }
             .blockStyle(height: .infinity)
             
@@ -93,6 +93,8 @@ struct mainPage: View {
         TodoDetialPage(currentScreen: $currentScreen, prevScreen: .main, index: clickedIndex ?? 0)
       } else if(currentScreen == .progressList) {
         ProgressDetailPage(currentScreen: $currentScreen, prevScreen: .main, index: clickedIndex ?? 0)
+      } else if(currentScreen == .todoList) {
+        
       }
     }
   }

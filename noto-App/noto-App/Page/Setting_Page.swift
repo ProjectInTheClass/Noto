@@ -26,15 +26,16 @@ struct SettingPage_ContentView_Preview: PreviewProvider {
 struct SettingPage: View {
   @State private var searchText = ""
   @State private var currentScreen: Screen = .settings
-  
-  var userProfile: String = "profile"
-  var userName: String = "User Name"
-  var userEmail: String = "aaaaaaa@gmail.com"
+  private var personIndex: Int = 0
   
   var body: some View {
     VStack(alignment: .leading) {
       ScrollView {
         VStack(spacing: 15){
+          let userProfile: String = personList[personIndex].imageName
+          let userName: String = personList[personIndex].name
+          let userEmail: String = personList[personIndex].email
+          
           currentPageHeader(currentPage: "설정")
           searchBar(searchText: $searchText, action: {print("검색창 클릭 수정 필요")})
           

@@ -33,6 +33,7 @@
 		62D1EA662CFD9779005801F6 /* Person_DataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62D1EA652CFD9775005801F6 /* Person_DataModel.swift */; };
 		62D1EA682CFDA6B1005801F6 /* Project_DataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62D1EA672CFDA6AC005801F6 /* Project_DataModel.swift */; };
 		62D1EA6A2CFDA962005801F6 /* ProgressList_Page.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62D1EA692CFDA95B005801F6 /* ProgressList_Page.swift */; };
+		62FB214A2CFEAE1800B298F0 /* Project_Page.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62FB21492CFEAE0300B298F0 /* Project_Page.swift */; };
 		7D8261FC2CED8A210045913B /* Modal_Component.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D8261FB2CED8A100045913B /* Modal_Component.swift */; };
 /* End PBXBuildFile section */
 
@@ -84,6 +85,7 @@
 		62D1EA652CFD9775005801F6 /* Person_DataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Person_DataModel.swift; sourceTree = "<group>"; };
 		62D1EA672CFDA6AC005801F6 /* Project_DataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Project_DataModel.swift; sourceTree = "<group>"; };
 		62D1EA692CFDA95B005801F6 /* ProgressList_Page.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressList_Page.swift; sourceTree = "<group>"; };
+		62FB21492CFEAE0300B298F0 /* Project_Page.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Project_Page.swift; sourceTree = "<group>"; };
 		7D8261FB2CED8A100045913B /* Modal_Component.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Modal_Component.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -190,6 +192,7 @@
 		621B9BCD2CF4448F00451367 /* Page */ = {
 			isa = PBXGroup;
 			children = (
+				62FB21492CFEAE0300B298F0 /* Project_Page.swift */,
 				62D1EA692CFDA95B005801F6 /* ProgressList_Page.swift */,
 				62D1EA622CFD8852005801F6 /* TodoDetail_Page.swift */,
 				621B9BDC2CF47F2700451367 /* Request_Page.swift */,
@@ -369,6 +372,7 @@
 				62D1EA662CFD9779005801F6 /* Person_DataModel.swift in Sources */,
 				627FFE9E2CEC299700DF70E8 /* Frame_Component.swift in Sources */,
 				1371F0202CDDE0150034FC36 /* Item.swift in Sources */,
+				62FB214A2CFEAE1800B298F0 /* Project_Page.swift in Sources */,
 				621B9BDD2CF47F2C00451367 /* Request_Page.swift in Sources */,
 				62D1EA6A2CFDA962005801F6 /* ProgressList_Page.swift in Sources */,
 				62D1EA5F2CFD80F6005801F6 /* Request_DataModel.swift in Sources */,

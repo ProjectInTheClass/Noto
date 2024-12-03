@@ -30,6 +30,7 @@ struct TodoDetialPage: View {
           
           VStack(spacing: 10){
             titleRow(title: todolist[index].title, optionAction: {print("모달 나오게 수정")})
+              .padding(.top, 40)
             Divider()
               .padding(.horizontal, 20)
               .padding(.bottom, 10)
@@ -39,6 +40,9 @@ struct TodoDetialPage: View {
               participantRow()
               tagRow(tag: todolist[index].tag)
               urlRow(url: todolist[index].url)
+              Divider()
+                .padding(.horizontal, 20)
+              descriptionRow(description: todolist[index].subtitle)
             }
             Spacer()
           }
@@ -77,12 +81,10 @@ struct titleRow: View {
         Image(systemName: "ellipsis")
           .font(.system(size: 24))
           .foregroundColor(.customBlack)
-          .padding(.trailing, 5)
       }
     }
     .frame(maxWidth: .infinity, alignment: .leading)
     .padding(.horizontal, 20)
-    .padding(.top, 40)
 
   }
 }
@@ -237,6 +239,33 @@ struct urlRow: View {
           .lineLimit(1)
           .truncationMode(.tail)
       }
+    }
+    .frame(maxWidth: .infinity, alignment: .leading)
+    .padding(.horizontal, 20)
+  }
+}
+
+struct descriptionRow: View  {
+  var description: String
+  var body: some View {
+    VStack(alignment: .leading, spacing: 10){
+      HStack {
+        Image("note")
+          .resizable()
+          .frame(width: 22, height: 22)
+          .padding(.horizontal, 10)
+        Text("일정 설명")
+          .subTitleFont()
+          .padding(.trailing, 25)
+      }
+      
+      HStack{
+        Text(description)
+          .descriptionFont()
+          .multilineTextAlignment(.leading)
+          .lineLimit(10)
+      }
+      .padding(.leading, 10)
     }
     .frame(maxWidth: .infinity, alignment: .leading)
     .padding(.horizontal, 20)
