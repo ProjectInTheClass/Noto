@@ -2,8 +2,10 @@ package com.noto.back.domain;
 
 import com.noto.back.domain.embid.ScheduleRequestId;
 import jakarta.persistence.*;
+import lombok.Setter;
 
 @Entity
+@Setter
 public class ScheduleRequest {
     @EmbeddedId
     private ScheduleRequestId id;

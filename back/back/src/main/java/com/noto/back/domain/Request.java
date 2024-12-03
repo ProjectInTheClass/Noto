@@ -1,11 +1,15 @@
 package com.noto.back.domain;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
+@Setter
+@Getter
 public class Request {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,7 +27,10 @@ public class Request {
     @JoinColumn(name = "sender_id")
     private User sender;
 
-    @OneToMany(mappedBy = "request")
+    @OneToMany(mappedBy = "request" , cascade = CascadeType.ALL, orphanRemoval = true)
     private List<RequestReceive> requestReceives = new ArrayList<>();
+
+    @OneToMany(mappedBy = "request", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ScheduleRequest> scheduleRequests = new ArrayList<>();
 }
 
