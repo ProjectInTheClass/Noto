@@ -15,14 +15,26 @@
 		1371F02F2CDDE0290034FC36 /* noto_AppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1371F02E2CDDE0290034FC36 /* noto_AppTests.swift */; };
 		1371F0392CDDE0290034FC36 /* noto_AppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1371F0382CDDE0290034FC36 /* noto_AppUITests.swift */; };
 		1371F03B2CDDE0290034FC36 /* noto_AppUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1371F03A2CDDE0290034FC36 /* noto_AppUITestsLaunchTests.swift */; };
+		621B9BC52CF4438800451367 /* Header_Component.swift in Sources */ = {isa = PBXBuildFile; fileRef = 621B9BC42CF4438200451367 /* Header_Component.swift */; };
+		621B9BC72CF443D600451367 /* Navigation_Componenet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 621B9BC62CF443C400451367 /* Navigation_Componenet.swift */; };
+		621B9BC92CF4440800451367 /* Request_Component.swift in Sources */ = {isa = PBXBuildFile; fileRef = 621B9BC82CF4440200451367 /* Request_Component.swift */; };
+		621B9BCB2CF4442C00451367 /* SearchBar_Component.swift in Sources */ = {isa = PBXBuildFile; fileRef = 621B9BCA2CF4442500451367 /* SearchBar_Component.swift */; };
+		621B9BD52CF46B3B00451367 /* Sub_Component.swift in Sources */ = {isa = PBXBuildFile; fileRef = 621B9BD42CF46B3B00451367 /* Sub_Component.swift */; };
+		621B9BD72CF46B5800451367 /* Main_Page.swift in Sources */ = {isa = PBXBuildFile; fileRef = 621B9BD62CF46B5300451367 /* Main_Page.swift */; };
+		621B9BD92CF46C5100451367 /* Project_Progress_Component.swift in Sources */ = {isa = PBXBuildFile; fileRef = 621B9BD82CF46C4800451367 /* Project_Progress_Component.swift */; };
+		621B9BDB2CF4750400451367 /* Setting_Page.swift in Sources */ = {isa = PBXBuildFile; fileRef = 621B9BDA2CF474FD00451367 /* Setting_Page.swift */; };
+		621B9BDD2CF47F2C00451367 /* Request_Page.swift in Sources */ = {isa = PBXBuildFile; fileRef = 621B9BDC2CF47F2700451367 /* Request_Page.swift */; };
 		627078DE2CE30A660027FF09 /* ColorStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 627078DD2CE30A5D0027FF09 /* ColorStyle.swift */; };
-		627078E42CE30B020027FF09 /* FontTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 627078E32CE30B000027FF09 /* FontTest.swift */; };
-		627078E62CE30BD70027FF09 /* StyleTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 627078E52CE30BD30027FF09 /* StyleTest.swift */; };
-		627078E82CE31B750027FF09 /* ImageTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 627078E72CE31B720027FF09 /* ImageTest.swift */; };
-		627FFE872CEADE9D00DF70E8 /* ComponentTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 627FFE862CEADE9700DF70E8 /* ComponentTest.swift */; };
 		627FFE9C2CEC295100DF70E8 /* FontStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 627FFE9B2CEC294E00DF70E8 /* FontStyle.swift */; };
-		627FFE9E2CEC299700DF70E8 /* Common_Component.swift in Sources */ = {isa = PBXBuildFile; fileRef = 627FFE9D2CEC299300DF70E8 /* Common_Component.swift */; };
-		627FFEA02CEC3D6F00DF70E8 /* Main_Page_Component.swift in Sources */ = {isa = PBXBuildFile; fileRef = 627FFE9F2CEC3D6500DF70E8 /* Main_Page_Component.swift */; };
+		627FFE9E2CEC299700DF70E8 /* Frame_Component.swift in Sources */ = {isa = PBXBuildFile; fileRef = 627FFE9D2CEC299300DF70E8 /* Frame_Component.swift */; };
+		62D1EA5F2CFD80F6005801F6 /* Request_DataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62D1EA5E2CFD80F1005801F6 /* Request_DataModel.swift */; };
+		62D1EA612CFD813D005801F6 /* Todo_DataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62D1EA602CFD8130005801F6 /* Todo_DataModel.swift */; };
+		62D1EA632CFD8865005801F6 /* TodoDetail_Page.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62D1EA622CFD8852005801F6 /* TodoDetail_Page.swift */; };
+		62D1EA662CFD9779005801F6 /* Person_DataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62D1EA652CFD9775005801F6 /* Person_DataModel.swift */; };
+		62D1EA682CFDA6B1005801F6 /* Project_DataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62D1EA672CFDA6AC005801F6 /* Project_DataModel.swift */; };
+		62D1EA6A2CFDA962005801F6 /* ProgressList_Page.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62D1EA692CFDA95B005801F6 /* ProgressList_Page.swift */; };
+		62FB214A2CFEAE1800B298F0 /* Project_Page.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62FB21492CFEAE0300B298F0 /* Project_Page.swift */; };
+		7D8261FC2CED8A210045913B /* Modal_Component.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D8261FB2CED8A100045913B /* Modal_Component.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -54,15 +66,27 @@
 		1371F0342CDDE0290034FC36 /* noto-AppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "noto-AppUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1371F0382CDDE0290034FC36 /* noto_AppUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = noto_AppUITests.swift; sourceTree = "<group>"; };
 		1371F03A2CDDE0290034FC36 /* noto_AppUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = noto_AppUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		621B9BC42CF4438200451367 /* Header_Component.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Header_Component.swift; sourceTree = "<group>"; };
+		621B9BC62CF443C400451367 /* Navigation_Componenet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Navigation_Componenet.swift; sourceTree = "<group>"; };
+		621B9BC82CF4440200451367 /* Request_Component.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Request_Component.swift; sourceTree = "<group>"; };
+		621B9BCA2CF4442500451367 /* SearchBar_Component.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBar_Component.swift; sourceTree = "<group>"; };
+		621B9BD42CF46B3B00451367 /* Sub_Component.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sub_Component.swift; sourceTree = "<group>"; };
+		621B9BD62CF46B5300451367 /* Main_Page.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Main_Page.swift; sourceTree = "<group>"; };
+		621B9BD82CF46C4800451367 /* Project_Progress_Component.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Project_Progress_Component.swift; sourceTree = "<group>"; };
+		621B9BDA2CF474FD00451367 /* Setting_Page.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Setting_Page.swift; sourceTree = "<group>"; };
+		621B9BDC2CF47F2700451367 /* Request_Page.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Request_Page.swift; sourceTree = "<group>"; };
 		623334682CDDE79100DE9DA1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		627078DD2CE30A5D0027FF09 /* ColorStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorStyle.swift; sourceTree = "<group>"; };
-		627078E32CE30B000027FF09 /* FontTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontTest.swift; sourceTree = "<group>"; };
-		627078E52CE30BD30027FF09 /* StyleTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StyleTest.swift; sourceTree = "<group>"; };
-		627078E72CE31B720027FF09 /* ImageTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageTest.swift; sourceTree = "<group>"; };
-		627FFE862CEADE9700DF70E8 /* ComponentTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComponentTest.swift; sourceTree = "<group>"; };
 		627FFE9B2CEC294E00DF70E8 /* FontStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontStyle.swift; sourceTree = "<group>"; };
-		627FFE9D2CEC299300DF70E8 /* Common_Component.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Common_Component.swift; sourceTree = "<group>"; };
-		627FFE9F2CEC3D6500DF70E8 /* Main_Page_Component.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Main_Page_Component.swift; sourceTree = "<group>"; };
+		627FFE9D2CEC299300DF70E8 /* Frame_Component.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Frame_Component.swift; sourceTree = "<group>"; };
+		62D1EA5E2CFD80F1005801F6 /* Request_DataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Request_DataModel.swift; sourceTree = "<group>"; };
+		62D1EA602CFD8130005801F6 /* Todo_DataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Todo_DataModel.swift; sourceTree = "<group>"; };
+		62D1EA622CFD8852005801F6 /* TodoDetail_Page.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoDetail_Page.swift; sourceTree = "<group>"; };
+		62D1EA652CFD9775005801F6 /* Person_DataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Person_DataModel.swift; sourceTree = "<group>"; };
+		62D1EA672CFDA6AC005801F6 /* Project_DataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Project_DataModel.swift; sourceTree = "<group>"; };
+		62D1EA692CFDA95B005801F6 /* ProgressList_Page.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressList_Page.swift; sourceTree = "<group>"; };
+		62FB21492CFEAE0300B298F0 /* Project_Page.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Project_Page.swift; sourceTree = "<group>"; };
+		7D8261FB2CED8A100045913B /* Modal_Component.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Modal_Component.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -117,8 +141,9 @@
 		1371F01A2CDDE0150034FC36 /* noto-App */ = {
 			isa = PBXGroup;
 			children = (
+				62D1EA5D2CFD80D8005801F6 /* DataModel */,
+				621B9BCD2CF4448F00451367 /* Page */,
 				627FFE9A2CEC293800DF70E8 /* Component */,
-				627078E22CE30AFA0027FF09 /* Test */,
 				623334682CDDE79100DE9DA1 /* Info.plist */,
 				623334532CDDE63200DE9DA1 /* Font */,
 				1371F01B2CDDE0150034FC36 /* noto_AppApp.swift */,
@@ -155,26 +180,53 @@
 			path = "noto-AppUITests";
 			sourceTree = "<group>";
 		};
-		627078E22CE30AFA0027FF09 /* Test */ = {
+		621B9BCC2CF4447100451367 /* Styles */ = {
 			isa = PBXGroup;
 			children = (
-				627FFE862CEADE9700DF70E8 /* ComponentTest.swift */,
-				627078E72CE31B720027FF09 /* ImageTest.swift */,
-				627078E52CE30BD30027FF09 /* StyleTest.swift */,
-				627078E32CE30B000027FF09 /* FontTest.swift */,
+				627FFE9B2CEC294E00DF70E8 /* FontStyle.swift */,
+				627078DD2CE30A5D0027FF09 /* ColorStyle.swift */,
 			);
-			path = Test;
+			path = Styles;
+			sourceTree = "<group>";
+		};
+		621B9BCD2CF4448F00451367 /* Page */ = {
+			isa = PBXGroup;
+			children = (
+				62FB21492CFEAE0300B298F0 /* Project_Page.swift */,
+				62D1EA692CFDA95B005801F6 /* ProgressList_Page.swift */,
+				62D1EA622CFD8852005801F6 /* TodoDetail_Page.swift */,
+				621B9BDC2CF47F2700451367 /* Request_Page.swift */,
+				621B9BDA2CF474FD00451367 /* Setting_Page.swift */,
+				621B9BD62CF46B5300451367 /* Main_Page.swift */,
+			);
+			path = Page;
 			sourceTree = "<group>";
 		};
 		627FFE9A2CEC293800DF70E8 /* Component */ = {
 			isa = PBXGroup;
 			children = (
-				627FFE9F2CEC3D6500DF70E8 /* Main_Page_Component.swift */,
-				627FFE9D2CEC299300DF70E8 /* Common_Component.swift */,
-				627FFE9B2CEC294E00DF70E8 /* FontStyle.swift */,
-				627078DD2CE30A5D0027FF09 /* ColorStyle.swift */,
+				621B9BD82CF46C4800451367 /* Project_Progress_Component.swift */,
+				621B9BCC2CF4447100451367 /* Styles */,
+				621B9BCA2CF4442500451367 /* SearchBar_Component.swift */,
+				621B9BC82CF4440200451367 /* Request_Component.swift */,
+				621B9BD42CF46B3B00451367 /* Sub_Component.swift */,
+				621B9BC62CF443C400451367 /* Navigation_Componenet.swift */,
+				621B9BC42CF4438200451367 /* Header_Component.swift */,
+				7D8261FB2CED8A100045913B /* Modal_Component.swift */,
+				627FFE9D2CEC299300DF70E8 /* Frame_Component.swift */,
 			);
 			path = Component;
+			sourceTree = "<group>";
+		};
+		62D1EA5D2CFD80D8005801F6 /* DataModel */ = {
+			isa = PBXGroup;
+			children = (
+				62D1EA672CFDA6AC005801F6 /* Project_DataModel.swift */,
+				62D1EA652CFD9775005801F6 /* Person_DataModel.swift */,
+				62D1EA602CFD8130005801F6 /* Todo_DataModel.swift */,
+				62D1EA5E2CFD80F1005801F6 /* Request_DataModel.swift */,
+			);
+			path = DataModel;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -311,16 +363,28 @@
 			buildActionMask = 2147483647;
 			files = (
 				1371F01E2CDDE0150034FC36 /* ContentView.swift in Sources */,
-				627FFE872CEADE9D00DF70E8 /* ComponentTest.swift in Sources */,
+				621B9BD72CF46B5800451367 /* Main_Page.swift in Sources */,
 				627FFE9C2CEC295100DF70E8 /* FontStyle.swift in Sources */,
-				627078E62CE30BD70027FF09 /* StyleTest.swift in Sources */,
-				627078E42CE30B020027FF09 /* FontTest.swift in Sources */,
-				627FFE9E2CEC299700DF70E8 /* Common_Component.swift in Sources */,
-				627FFEA02CEC3D6F00DF70E8 /* Main_Page_Component.swift in Sources */,
+				62D1EA612CFD813D005801F6 /* Todo_DataModel.swift in Sources */,
+				621B9BD92CF46C5100451367 /* Project_Progress_Component.swift in Sources */,
+				62D1EA632CFD8865005801F6 /* TodoDetail_Page.swift in Sources */,
+				7D8261FC2CED8A210045913B /* Modal_Component.swift in Sources */,
+				62D1EA662CFD9779005801F6 /* Person_DataModel.swift in Sources */,
+				627FFE9E2CEC299700DF70E8 /* Frame_Component.swift in Sources */,
 				1371F0202CDDE0150034FC36 /* Item.swift in Sources */,
-				627078E82CE31B750027FF09 /* ImageTest.swift in Sources */,
+				62FB214A2CFEAE1800B298F0 /* Project_Page.swift in Sources */,
+				621B9BDD2CF47F2C00451367 /* Request_Page.swift in Sources */,
+				62D1EA6A2CFDA962005801F6 /* ProgressList_Page.swift in Sources */,
+				62D1EA5F2CFD80F6005801F6 /* Request_DataModel.swift in Sources */,
+				62D1EA682CFDA6B1005801F6 /* Project_DataModel.swift in Sources */,
 				1371F01C2CDDE0150034FC36 /* noto_AppApp.swift in Sources */,
+				621B9BD52CF46B3B00451367 /* Sub_Component.swift in Sources */,
+				621B9BC92CF4440800451367 /* Request_Component.swift in Sources */,
+				621B9BC72CF443D600451367 /* Navigation_Componenet.swift in Sources */,
 				627078DE2CE30A660027FF09 /* ColorStyle.swift in Sources */,
+				621B9BC52CF4438800451367 /* Header_Component.swift in Sources */,
+				621B9BCB2CF4442C00451367 /* SearchBar_Component.swift in Sources */,
+				621B9BDB2CF4750400451367 /* Setting_Page.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
