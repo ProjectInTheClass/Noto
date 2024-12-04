@@ -33,8 +33,16 @@ public interface RequestRepository extends JpaRepository<Request, Long> {
     """)
     List<Object[]> getRequestInfo(@Param("requestId") Long requestId);
 
-    @Query("SELECT r.request.title, r.request.sender.name " +
+    @Query("SELECT r.request.title, r.request.sender.name, r.request.id " +
             "FROM RequestReceive r " +
             "WHERE r.receiver.id = :receiverId")
     List<Object[]> findRequestInfoByReceiverId(@Param("receiverId") Long receiverId);
+
+    @Query("""
+        SELECT r.title, r.sender.name, r.id
+        FROM Request r 
+        WHERE r.sender.id = :senderId
+       """)
+    List<Object[]> findBySenderId(@Param("senderId") Long senderId);
+
 }

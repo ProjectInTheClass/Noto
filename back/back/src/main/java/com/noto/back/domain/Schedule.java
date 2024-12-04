@@ -28,6 +28,8 @@ public class Schedule {
 
     private String url;
 
+    private Boolean completed;
+
     // Relationships
     @ManyToOne
     @JoinColumn(name = "project_id")

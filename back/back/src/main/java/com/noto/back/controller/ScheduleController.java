@@ -24,7 +24,7 @@ public class ScheduleController {
     private final ScheduleRepository scheduleRepository;
 
     @GetMapping("/today")
-    @Operation(summary = "오늘 내 할일 가져오기", description = "오늘 내 할일(일정) 가져오기")
+    @Operation(summary = "오늘 내 할일 가져오기", description = "오늘 내 할일(일정) 가져오기 (메인 페이지, 일정 리스트 모달)")
     @Parameters({
             @Parameter(name = "userId", description = "사용자 ID", example = "1", required = true)
     })
@@ -38,7 +38,7 @@ public class ScheduleController {
     }
 
     @GetMapping("/project/{projectId}")
-    @Operation(summary = "프로젝트 내의 일정 가져오기", description = "프로젝트 내의 일정 가져오기")
+    @Operation(summary = "프로젝트 내의 일정 가져오기", description = "프로젝트 내의 일정 가져오기 (리퀘스트 전송하기)")
     public ApiResponse<List<ScheduleInProjectResponse>> getSchedulesInProject(@PathVariable Long projectId) {
         List<ScheduleInProjectResponse> scheduleInProjectResponses = scheduleService.getScheduleOfTheProject(projectId);
         return ApiResponse.<List<ScheduleInProjectResponse>>builder()
@@ -49,7 +49,7 @@ public class ScheduleController {
     }
 
     @GetMapping("/info/{scheduleId}")
-    @Operation(summary = "일정 상세 정보 가져오기", description = "일정 상세 정보 가져오기")
+    @Operation(summary = "일정 상세 정보 가져오기", description = "일정 상세 정보 가져오기 (일정 페이지)")
     public ApiResponse<ScheduleResponse> getScheduleInfo(@PathVariable Long scheduleId) {
         ScheduleResponse scheduleResponse = scheduleService.getScheduleInfo(scheduleId);
         return ApiResponse.<ScheduleResponse>builder()
@@ -60,7 +60,7 @@ public class ScheduleController {
     }
 
     @GetMapping("/monthly/{projectId}")
-    @Operation(summary = "프로젝트 내의 한달 간의 일정 가져오기", description = "프로젝트 내의 한달 간의 일정 가져오기")
+    @Operation(summary = "프로젝트 내의 한달 간의 일정 가져오기", description = "프로젝트 내의 한달 간의 일정 가져오기 (개별 프로젝트 화면)")
     @Parameters({
             @Parameter(name = "year", description = "년", example = "2024", required = true),
             @Parameter(name = "month", description = "월", example = "12", required = true)
@@ -75,7 +75,7 @@ public class ScheduleController {
     }
 
     @PostMapping("")
-    @Operation(summary = "프로젝트 내 일정 생성하기", description = "프로젝트 내 일정 생성하기")
+    @Operation(summary = "프로젝트 내 일정 생성하기", description = "프로젝트 내 일정 생성하기 (일정 편집 모달)")
     public ApiResponse<ScheduleResponse> postSchedule(@RequestBody PostScheduleRequest request) {
         ScheduleResponse response = scheduleService.postSchedule(request);
         return ApiResponse.<ScheduleResponse>builder()
@@ -86,7 +86,7 @@ public class ScheduleController {
     }
 
     @PutMapping("/{scheduleId}")
-    @Operation(summary = "프로젝트 내 일정 수정하기" , description = "프로젝트 내 일정 수정하기")
+    @Operation(summary = "프로젝트 내 일정 수정하기" , description = "프로젝트 내 일정 수정하기 (일정 편집 모달)")
     public ApiResponse<ScheduleResponse> putSchedule(@RequestBody PutScheduleRequest request, @PathVariable Long scheduleId) {
         ScheduleResponse response = scheduleService.putSchedule(request, scheduleId);
         return ApiResponse.<ScheduleResponse>builder()
@@ -97,9 +97,20 @@ public class ScheduleController {
     }
 
     @DeleteMapping("/{scheduleId}")
-    @Operation(summary = "프로젝트 내 일정 삭제하기" , description = "프로젝트 내 일정 삭제하기")
+    @Operation(summary = "프로젝트 내 일정 삭제하기" , description = "프로젝트 내 일정 삭제하기 (일정 편집 모달)")
     public ApiResponse<Void> deleteSchedule(@PathVariable Long scheduleId) {
         scheduleService.deleteById(scheduleId);
+        return ApiResponse.<Void>builder()
+                .code("OK")
+                .message("")
+                .data(null)
+                .build();
+    }
+
+    @PutMapping("/complete/{scheduleId}")
+    @Operation(summary = "프로젝트 내 일정 완료하기" , description = "프로젝트 내 일정 완료하기")
+    public ApiResponse<Void> completeSchedule(@PathVariable Long scheduleId) {
+        scheduleService.completeSchedule(scheduleId);
         return ApiResponse.<Void>builder()
                 .code("OK")
                 .message("")

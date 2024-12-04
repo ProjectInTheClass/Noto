@@ -21,7 +21,7 @@ public class ProjectController {
     private final ProjectService projectService;
 
     @GetMapping("/progress")
-    @Operation(summary = "프로젝트 진행 현황 가져오기", description = "프로젝트 진행 현황과 정보 가져오기")
+    @Operation(summary = "프로젝트 진행 현황 가져오기", description = "프로젝트 진행 현황과 정보 가져오기 (메인 페이지, 프로젝트 진행 현황,)")
     @Parameters({
             @Parameter(name = "userId", description = "사용자 ID", example = "1", required = true)
     })
@@ -38,7 +38,7 @@ public class ProjectController {
     }
 
     @GetMapping("/{projectId}")
-    @Operation(summary = "프로젝트 상세 정보 가져오기", description = "프로젝트 상세 정보 가져오기")
+    @Operation(summary = "프로젝트 상세 정보 가져오기", description = "프로젝트 상세 정보 가져오기 (프로젝트 수정 모달, 개별 프로젝트 화면)")
     public ApiResponse<ProjectResponse> getProjectInfo(@PathVariable Long projectId) {
         ProjectResponse projectResponse = projectService.getProjectInfo(projectId);
         return ApiResponse.<ProjectResponse>builder()
@@ -49,7 +49,7 @@ public class ProjectController {
     }
 
     @GetMapping("/list")
-    @Operation(summary = "프로젝트 리스트 가져오기", description = "프로젝트 이름 리스트 가져오기")
+    @Operation(summary = "프로젝트 리스트 가져오기", description = "프로젝트 이름 리스트 가져오기 (프로젝트 선택 모달, 리퀘스트 전송하기)")
     @Parameters({
             @Parameter(name = "userId", description = "사용자 ID", example = "1", required = true)
     })
@@ -64,7 +64,7 @@ public class ProjectController {
     }
 
     @PostMapping("")
-    @Operation(summary = "프로젝트 생성하기", description = "프로젝트 생성하기")
+    @Operation(summary = "프로젝트 생성하기", description = "프로젝트 생성하기 (프로젝트 생성 모달)")
     public ApiResponse<ProjectResponse> postProject(@RequestBody PostProjectRequest request) {
         ProjectResponse projectResponse = projectService.postProject(request);
 
@@ -76,7 +76,7 @@ public class ProjectController {
     }
 
     @PutMapping("/{projectId}")
-    @Operation(summary = "프로젝트 수정하기", description = "프로젝트 수정하기")
+    @Operation(summary = "프로젝트 수정하기", description = "프로젝트 수정하기 (프로젝트 수정 모달)")
     public ApiResponse<ProjectResponse> putProject(@RequestBody PostProjectRequest request, @PathVariable Long projectId) {
         ProjectResponse projectResponse = projectService.putProject(request, projectId);
 
