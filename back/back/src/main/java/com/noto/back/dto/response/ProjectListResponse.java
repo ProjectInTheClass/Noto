@@ -6,6 +6,6 @@ import java.util.List;
 
 @Builder
 public record ProjectListResponse(
-        List<String> projectNames
+        List<ProjectListEntity> projects
 ) {
 }

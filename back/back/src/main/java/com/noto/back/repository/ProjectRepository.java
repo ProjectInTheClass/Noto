@@ -55,8 +55,8 @@ public interface ProjectRepository extends JpaRepository<Project, Long> {
         List<Schedule> findSchedulesByCurrentMonthAndProjectId(Long projectId);
 
 
-        @Query("SELECT pp.project.name FROM ProjectParticipate pp WHERE pp.user.id = :userId")
-        List<String> findProjectNamesByUserId(@Param("userId") Long userId);
+        @Query("SELECT pp.project.name, pp.project.id FROM ProjectParticipate pp WHERE pp.user.id = :userId")
+        List<Object[]> findProjectNamesByUserId(@Param("userId") Long userId);
 
         @Query( """ 
                 SELECT GROUP_CONCAT(u.name) FROM User u
