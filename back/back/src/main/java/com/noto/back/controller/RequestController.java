@@ -2,10 +2,7 @@ package com.noto.back.controller;
 
 import com.noto.back.dto.request.PostRequestRequest;
 import com.noto.back.dto.request.PutRequestRequest;
-import com.noto.back.dto.response.ApiResponse;
-import com.noto.back.dto.response.RequestInfoResponse;
-import com.noto.back.dto.response.RequestListResponse;
-import com.noto.back.dto.response.RequestNumberResponse;
+import com.noto.back.dto.response.*;
 import com.noto.back.service.RequestService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -25,7 +22,7 @@ public class RequestController {
     private final RequestService requestService;
 
     @GetMapping("/number")
-    @Operation(summary = "리퀘스트 수량 가져오기", description = "리퀘스트 알림 수 가져오기")
+    @Operation(summary = "리퀘스트 수량 가져오기", description = "리퀘스트 알림 수 가져오기 (메인 페이지, 개별 프로젝트 화면)")
     @Parameters({
             @Parameter(name = "userId", description = "사용자 ID", example = "1", required = true)
     })
@@ -39,7 +36,7 @@ public class RequestController {
     }
 
     @GetMapping("/info/{requestId}")
-    @Operation(summary = "리퀘스트 상세 정보 가져오기", description = "리퀘스트 상세 정보 가져오기")
+    @Operation(summary = "리퀘스트 상세 정보 가져오기", description = "리퀘스트 상세 정보 가져오기(리퀘스트 확인 모달)")
     @Parameters({
             @Parameter(name = "userId", description = "사용자 ID", example = "1", required = true)
     })
@@ -53,21 +50,21 @@ public class RequestController {
     }
 
     @GetMapping("/list")
-    @Operation(summary = "리퀘스트 리스트 가져오기", description = "리퀘스트 리스트와 정보 가져오기")
+    @Operation(summary = "리퀘스트 리스트 가져오기", description = "리퀘스트 리스트와 정보 가져오기 (리퀘스트 페이지)")
     @Parameters({
             @Parameter(name = "userId", description = "사용자 ID", example = "1", required = true)
     })
-    public ApiResponse<List<RequestListResponse>> getRequestList(@RequestParam Long userId) {
-        List<RequestListResponse> requestResponses = requestService.getRequestList(userId);
+    public ApiResponse<FinalRequestListResponse> getRequestList(@RequestParam Long userId) {
+        FinalRequestListResponse requestResponses = requestService.getRequestList(userId);
 
-        return ApiResponse.<List<RequestListResponse>>builder()
+        return ApiResponse.<FinalRequestListResponse>builder()
                 .code("OK")
                 .message("")
                 .data(requestResponses).build();
     }
 
-    @PostMapping("/request")
-    @Operation(summary = "리퀘스트 생성하기", description = "리퀘스트 생성하기")
+    @PostMapping("")
+    @Operation(summary = "리퀘스트 생성하기", description = "리퀘스트 생성하기 (리퀘스트 전송하기)")
     public ApiResponse<RequestInfoResponse> postRequest(PostRequestRequest request) {
         RequestInfoResponse requestInfoResponse = requestService.postRequest(request);
 
@@ -78,7 +75,7 @@ public class RequestController {
     }
 
     @PatchMapping("/{requestId}")
-    @Operation(summary = "리퀘스트 응답하기", description = "리퀘스트 응답하기")
+    @Operation(summary = "리퀘스트 응답하기", description = "리퀘스트 응답하기 (리퀘스트 응답 모달)")
     public ApiResponse<Void> putRequest(PutRequestRequest request, @RequestParam Long requestId) {
         requestService.putRequest(request, requestId);
 

@@ -2,10 +2,7 @@ package com.noto.back.service;
 
 import com.noto.back.domain.Project;
 import com.noto.back.dto.request.PostProjectRequest;
-import com.noto.back.dto.response.ProgressResponse;
-import com.noto.back.dto.response.ProjectListResponse;
-import com.noto.back.dto.response.ProjectProgressResponse;
-import com.noto.back.dto.response.ProjectResponse;
+import com.noto.back.dto.response.*;
 import com.noto.back.repository.ProjectRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.cglib.core.Local;
@@ -17,6 +14,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
@@ -71,10 +69,17 @@ public class ProjectService {
     }
 
     public ProjectListResponse getProjectListsByUserId(Long userId) {
-        List<String> projectNames = projectRepository.findProjectNamesByUserId(userId);
+        List<Object[]> projectListEntities = projectRepository.findProjectNamesByUserId(userId);
+
+        List<ProjectListEntity> projects = projectListEntities.stream()
+                .map(result -> new ProjectListEntity(
+                        (String) result[0], // 이름
+                        (Long) result[1]    // ID
+                ))
+                .collect(Collectors.toList());
 
         return ProjectListResponse.builder()
-                .projectNames(projectNames)
+                .projects(projects)
                 .build();
     }
 
