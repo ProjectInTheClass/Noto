@@ -18,7 +18,7 @@ public class UserController {
     private final ProjectParticipateService projectParticipateService;
 
     @GetMapping("/{userId}")
-    @Operation(summary = "유저 정보 가져오기", description = "유저 정보 가져오기")
+    @Operation(summary = "유저 정보 가져오기", description = "유저 정보 가져오기 (설정 페이지)")
     public ApiResponse<UserResponse> getUserInfoById(@PathVariable Long userId) {
         UserResponse userResponse = userService.getUserInfoById(userId);
         return ApiResponse.<UserResponse>builder()
@@ -28,7 +28,7 @@ public class UserController {
     }
 
     @PostMapping("/participate")
-    @Operation(summary = "유저 프로젝트 참가", description = "유저가 프로젝트에 참가")
+    @Operation(summary = "유저 프로젝트 참가", description = "유저가 프로젝트에 참가 (프로젝트 참가)")
     public ApiResponse<Void> userParticipateProject(@RequestBody PostParticipateRequest postParticipateRequest) {
         projectParticipateService.addParticipate(postParticipateRequest.userId(), postParticipateRequest.projectId());
         return ApiResponse.<Void>builder()

@@ -6,10 +6,7 @@ import com.noto.back.domain.embid.ScheduleParticipateId;
 import com.noto.back.domain.embid.ScheduleRequestId;
 import com.noto.back.dto.request.PostRequestRequest;
 import com.noto.back.dto.request.PutRequestRequest;
-import com.noto.back.dto.response.RequestInfoResponse;
-import com.noto.back.dto.response.RequestListResponse;
-import com.noto.back.dto.response.RequestNumberResponse;
-import com.noto.back.dto.response.RequestReceiveResponse;
+import com.noto.back.dto.response.*;
 import com.noto.back.repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.cglib.core.Local;
@@ -70,17 +67,30 @@ public class RequestService {
                 .build();
     }
 
-    public List<RequestListResponse> getRequestList(Long userId) {
+    public FinalRequestListResponse getRequestList(Long userId) {
         List<Object[]> results = requestRepository.findRequestInfoByReceiverId(userId);
-        List<RequestListResponse> returnResponses = new ArrayList<>();
+        List<RequestListResponse> receiveRequest = new ArrayList<>();
         for (Object[] result: results) {
-            returnResponses.add(RequestListResponse.builder()
+            receiveRequest.add(RequestListResponse.builder()
                     .title((String) result[0])
                     .sender((String) result[1])
+                    .requestId((Long) result[2])
                     .build());
         }
 
-        return returnResponses;
+        List<Object[]> sendResults = requestRepository.findBySenderId(userId);
+        List<RequestListResponse> sendRequest = new ArrayList<>();
+        for (Object[] result: sendResults) {
+            sendRequest.add(RequestListResponse.builder()
+                    .title((String) result[0])
+                    .sender((String) result[1])
+                    .requestId((Long) result[2])
+                    .build());
+        }
+
+        return FinalRequestListResponse.builder()
+                .sendRequest(sendRequest)
+                .receiveRequest(receiveRequest).build();
     }
 
     public RequestInfoResponse postRequest(PostRequestRequest request) {
@@ -164,9 +174,9 @@ public class RequestService {
         List<Object[]> results = requestReceiveRepository.findByRequestId(requestId);
         return results.stream()
                 .map(row -> new RequestReceiveResponse(
-                        (String) row[0], // receiverName
+                        (String) row[2], // status
                         (String) row[1], // comment
-                        (String) row[2]  // status
+                        (String) row[0]  // receiverName
                 ))
                 .toList();
 

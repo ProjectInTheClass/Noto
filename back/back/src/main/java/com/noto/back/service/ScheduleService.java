@@ -9,6 +9,7 @@ import com.noto.back.dto.response.ScheduleResponse;
 import com.noto.back.dto.response.ScheduleSummary;
 import com.noto.back.dto.response.TodayScheduleResponse;
 import com.noto.back.repository.*;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -225,6 +226,44 @@ public class ScheduleService {
     public Void deleteById(Long scheduleId) {
         scheduleRepository.deleteById(scheduleId);
         return null;
+    }
 
+    public Void completeSchedule(Long scheduleId) {
+        // 1. 일정 조회
+        Schedule schedule = scheduleRepository.findById(scheduleId)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid schedule ID: " + scheduleId));
+
+        // 2. 완료 상태 업데이트
+        if (Boolean.TRUE.equals(schedule.getCompleted())) {
+            throw new IllegalStateException("This schedule is already completed.");
+        }
+        schedule.setCompleted(true);
+        scheduleRepository.save(schedule);
+
+        // 3. 프로젝트의 progress 업데이트
+        updateProjectProgress(schedule.getProject().getId());
+        return null;
+    }
+
+    @Transactional
+    public void updateProjectProgress(Long projectId) {
+        // 프로젝트 조회
+        Project project = projectRepository.findById(projectId)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid project ID: " + projectId));
+
+        // 프로젝트의 모든 일정 가져오기
+        List<Schedule> schedules = scheduleRepository.findByProjectId(projectId);
+
+        // 완료된 일정 개수
+        long completedSchedules = schedules.stream()
+                .filter(Schedule::getCompleted)
+                .count();
+
+        // 진행률 계산 (완료된 일정 / 전체 일정) * 100
+        int progress = (int) ((double) completedSchedules / schedules.size() * 100);
+        project.setProgress(progress);
+
+        // 프로젝트 저장
+        projectRepository.save(project);
     }
 }
