@@ -5,7 +5,7 @@ struct ProgressDetailPage_ContentView: View {
   @State private var prevScreen: Page = .main
   @State private var clickedIndex: Int = 1
   var body: some View {
-    ProgressDetailPage(currentScreen: $currentScreen, prevScreen: prevScreen, index: clickedIndex)
+    ProgressDetailPage(currentScreen: $currentScreen, prevScreen: prevScreen, pid: clickedIndex)
   }
 }
 
@@ -19,7 +19,7 @@ struct ProgressDetailPage: View {
   @State private var searchText = ""
   @Binding var currentScreen: Page
   var prevScreen: Page
-  var index: Int
+  var pid: Int
   
   var body: some View {
     VStack {
@@ -38,7 +38,7 @@ struct ProgressDetailPage: View {
                 projectContentRows(projectIndex: index)
                   .padding(.bottom, 10)
               }
-              viewAllComponent(title: "프로젝트 페이지로 이동", action: {print("프로젝트 이동 클릭")})
+              viewAllComponent(title: "프로젝트 페이지로 이동", action: {currentScreen = .projectDetail})
             }
             .blockStyle(height: .infinity)
           }

@@ -26,11 +26,12 @@ struct TodoDetialPage: View {
         VStack(spacing: 15) {
           dumyHeader()
           goBackCompletionHeader(goBackAction: {currentScreen = prevScreen},
-                                 completionAction: { print("일정 완료 버튼 수정 필요") })
+                                 completionAction: { print("일정 완료 버튼 클릭 (수정 필요)") })
           
           VStack(spacing: 10){
-            titleRow(title: todolist[index].title, optionAction: {print("모달 나오게 수정")})
-              .padding(.top, 40)
+            Spacer()
+            titleRow_3(title: todolist[index].title, optionAction: {print("일정 수정 버튼 클릭 (수정 필요)")})
+              .padding(.top, 10)
             Divider()
               .padding(.horizontal, 20)
               .padding(.bottom, 10)
@@ -60,32 +61,6 @@ struct TodoDetialPage: View {
       }
       .scrollViewStyle()
     }
-  }
-}
-
-// 행 컴포넌트
-struct titleRow: View {
-  var title: String
-  var optionAction: () -> Void
-  
-  var body: some View {
-    HStack {
-      Text(title)
-        .titleFont()
-        .lineLimit(1)
-        .truncationMode(.tail)
-      Spacer()
-      Button(action: {
-        optionAction()
-      }) {
-        Image(systemName: "ellipsis")
-          .font(.system(size: 24))
-          .foregroundColor(.customBlack)
-      }
-    }
-    .frame(maxWidth: .infinity, alignment: .leading)
-    .padding(.horizontal, 20)
-
   }
 }
 
