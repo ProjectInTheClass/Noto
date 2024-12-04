@@ -9,7 +9,7 @@ struct mainHeader: View {
         .scaledToFit()
         .frame(width: 120)
     }
-    .frame(width: .infinity, height: 96, alignment: .bottom)
+    .frame(width: 120, height: 96, alignment: .bottom)
   }
 }
 

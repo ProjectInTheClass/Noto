@@ -61,7 +61,7 @@ struct ProjectContnentFont: ViewModifier {
 struct DescriptionFont: ViewModifier {
   func body(content: Content) -> some View {
     content
-      .font(.custom("Freesentation-5Medium", size: 12))
+      .font(.custom("Freesentation-5Medium", size: 13))
       .foregroundColor(.customDarkGray)
       .multilineTextAlignment(.leading)
       .lineSpacing(10)

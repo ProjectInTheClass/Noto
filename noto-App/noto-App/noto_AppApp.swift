@@ -18,8 +18,9 @@ struct noto_AppApp: App {
 
     var body: some Scene {
         WindowGroup {
-            //ContentView()
-            MainPage_ContentView()
+          //ContentView()
+          MainPage_ContentView()
+          //ProjectPage_ContentView()
         }
         .modelContainer(sharedModelContainer)
       

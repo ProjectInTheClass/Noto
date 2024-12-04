@@ -4,10 +4,8 @@ struct ProjectPage_ContentView: View {
   @State private var currentScreen: Page = .projectDetail
   @State private var prevScreen: Page = .main
   @State private var pid: Int = 0
-  @State private var selectedDate: Date? = nil
   var body: some View {
-    ProjectPage(selectedDate: $selectedDate,
-                currentScreen: $currentScreen,
+    ProjectPage(currentScreen: $currentScreen,
                 prevScreen: prevScreen,
                 pid: pid)
   }
@@ -21,53 +19,59 @@ struct ProjectPage_ContentView_Preview: PreviewProvider {
 
 struct ProjectPage: View {
   @State private var searchText = ""
-  @Binding var selectedDate: Date?
+  @State var selectedDate: Date = Date()
   @Binding var currentScreen: Page
+  @Namespace var todoSection
   var prevScreen: Page
   var pid: Int
   let calendar = Calendar.current
   
   var body: some View {
-    let project = projectList[pid]
+    let project = projectList.filter { project in
+      return project.pid == pid // startDate와 endDate 사이인지 확인
+    }
+    
     
     VStack {
-      ScrollView {
-        VStack(spacing: 20) {
-          mainHeader()
-          requestComponent(req_count: 5, action: { currentScreen = .requestList })
-          
-          VStack{
-            VStack(alignment: .leading, spacing: 5) {
-              Spacer()
-              titleRow(title: project.name, optionAction: {print("설정 버튼 수정 필요")})
-                .padding(.top, 10)
-              Divider()
-                .padding(10)
-              VStack(alignment: .leading, spacing: 15){
-                dateRow(startDate: project.startDate, endDate: project.endDate)
-                participantRow()
+      ScrollViewReader { proxy in
+        ScrollView {
+          VStack(spacing: 20) {
+            mainHeader()
+            requestComponent(req_count: 5, action: { currentScreen = .requestList })
+            
+            VStack{
+              VStack(alignment: .leading, spacing: 5) {
+                Spacer()
+                titleRow_3(title: project[0].name, optionAction: {print("프로젝트 설정 버튼 클릭 (수정 필요)")})
+                  .padding(.top, 10)
                 Divider()
-                  .padding(.horizontal, 10)
-                descriptionRow(description: project.description)
+                  .padding(10)
+                VStack(alignment: .leading, spacing: 15){
+                  dateRow(startDate: project[0].startDate, endDate: project[0].endDate)
+                  participantRow()
+                  Divider()
+                    .padding(.horizontal, 10)
+                  descriptionRow(description: project[0].description)
+                }
+                Spacer()
               }
-              Spacer()
             }
-          }
-          .blockStyle(height: .infinity)
-          
-          VStack{
-            Spacer()
-            CalendarView(selectedDate: $selectedDate, project: project)
-              .padding(.top, 10)
-          }
-          .blockStyle(height: .infinity)
-          
-          if(selectedDate != nil) {
+            .blockStyle(height: .infinity)
+            
+            VStack{
+              Spacer()
+              CalendarView(selectedDate: $selectedDate,
+                           onDateSelected: {
+                withAnimation{ proxy.scrollTo(todoSection, anchor: .bottom) }
+              }, project: project[0])
+                .padding(.top, 10)
+            }
+            .blockStyle(height: .infinity)
+            
             VStack(spacing: 10) {
               Spacer()
               
               let filteredTodos = todolist.filter { todo in
-                  guard let selectedDate = selectedDate else { return false }
                   return (todo.startDate...todo.endDate).contains(selectedDate) // startDate와 endDate 사이인지 확인
               }
               
@@ -98,11 +102,14 @@ struct ProjectPage: View {
               viewAllComponent(title: "오늘 내 할 일 모두 보기", action: {currentScreen = .todoList})
             }
             .blockStyle(height: .infinity)
+            
+            dumyBottom()
+            .id(todoSection)
           }
+          .backgroundStyle()
         }
-        .backgroundStyle()
+        .scrollViewStyle()
       }
-      .scrollViewStyle()
     }
   }
 }
@@ -110,21 +117,24 @@ struct ProjectPage: View {
 struct CalendarView: View {
   // 현재 월 및 연도
   @State private var currentDate = Date()
-  @Binding var selectedDate: Date?
+  @Binding var selectedDate: Date
+  var onDateSelected: () -> Void
   let calendar = Calendar.current
   let project: project
   
   var body: some View {
     VStack(alignment: .leading) {
       Spacer()
-      titleRow(title: "\(monthAndYear(for: currentDate)) 캘린더", optionAction: {print("설정 버튼 수정 필요")})
+      titleRow_3(title: "\(monthAndYear(for: currentDate)) 캘린더", optionAction: {print("캘린더 설정 버튼 클릭 (수정 필요)")})
       
       Divider()
         .padding(.horizontal, 20)
         .padding(.top, 10)
       
       // 캘린더 레이아웃
-      CalendarGridView(currentDate: $currentDate, selectedDate: $selectedDate)
+      CalendarGridView(currentDate: $currentDate,
+                       selectedDate: $selectedDate,
+                       onDateSelected: onDateSelected)
         .padding()
     
     }
@@ -141,13 +151,15 @@ struct CalendarView: View {
 
 struct CalendarGridView: View {
   @Binding var currentDate: Date
-  @Binding var selectedDate: Date?
+  @Binding var selectedDate: Date
+  var onDateSelected: () -> Void
   let calendar = Calendar.current
   
   var body: some View {
     let daysInMonth = getDaysInMonth(for: currentDate)
     let firstDayOfMonth = getFirstDayOfMonth(for: currentDate)
     let weekdays = calendar.shortWeekdaySymbols
+    let components = calendar.dateComponents([.year, .month, .day], from: selectedDate)
     
     VStack(spacing: 5) {
       // 요일 헤더
@@ -166,19 +178,28 @@ struct CalendarGridView: View {
         ForEach(0..<firstDayOfMonth, id: \.self) { _ in
           Text("").frame(maxWidth: .infinity)
         }
-        
         // 날짜와 이벤트 렌더링
         ForEach(1...daysInMonth, id: \.self) { day in
           let currentDay = calendar.date(byAdding: .day, value: day - 1, to: getFirstDateOfMonth(for: currentDate))!
+          let currentDayComponents = calendar.dateComponents([.year, .month, .day], from: currentDay)
           Button(action: {
             selectedDate = currentDay
+            onDateSelected()
           }) {
             VStack(spacing: 0){
               // 날짜 숫자
-              Text("\(day)")
-                .foregroundColor(.customBlack)
-                .font(.body)
-                .frame(maxWidth: .infinity)
+              if(currentDayComponents == components){
+                Text("\(day)")
+                  .foregroundColor(.customBlue)
+                  .font(.body)
+                  .fontWeight(.bold)
+                  .frame(maxWidth: .infinity)
+              } else {
+                Text("\(day)")
+                  .foregroundColor(.customBlack)
+                  .font(.body)
+                  .frame(maxWidth: .infinity)
+              }
               
               // 이벤트 바
               if (eventForDate(currentDay) != nil) {
