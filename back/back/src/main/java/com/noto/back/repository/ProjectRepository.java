@@ -20,7 +20,8 @@ public interface ProjectRepository extends JpaRepository<Project, Long> {
                     JOIN ProjectParticipate pp ON pp.id.userId = u.id
                     WHERE pp.id.projectId = p.id),
                     p.startDate,
-                    p.endDate
+                    p.endDate,
+                    p.id
                 FROM Project p
                 WHERE p.id IN (
                     SELECT pp.id.projectId
