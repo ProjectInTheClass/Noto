@@ -11,7 +11,7 @@ public record ScheduleResponse(
         String name,
         LocalDate startDate,
         LocalDate endDate,
-        List<String> Participants,
+        List<String> participants,
         String description,
         String tag,
         String url

@@ -125,7 +125,7 @@ public class ScheduleService {
                 .description(description)
                 .tag(tag)
                 .url(url)
-                .Participants(participants)
+                .participants(participants)
                 .build();
     }
 
@@ -174,7 +174,7 @@ public class ScheduleService {
                 .description(savedSchedule.getDescription())
                 .tag(savedSchedule.getTag())
                 .url(savedSchedule.getUrl())
-                .Participants(names)
+                .participants(names)
                 .build();
     }
 
@@ -220,7 +220,7 @@ public class ScheduleService {
                 .description(savedSchedule.getDescription())
                 .tag(savedSchedule.getTag())
                 .url(savedSchedule.getUrl())
-                .Participants(names)
+                .participants(names)
                 .build();
     }
 
