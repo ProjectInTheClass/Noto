@@ -35,6 +35,7 @@ public class ScheduleService {
         // Schedule -> ScheduleSummary 변환
         List<ScheduleSummary> summaries = todaySchedules.stream()
                 .map(schedule -> ScheduleSummary.builder()
+                        .id(schedule.getId())
                         .name(schedule.getName())
                         .description(schedule.getDescription())
                         .endDate(schedule.getEndDate())
