@@ -13,6 +13,7 @@ import java.util.List;
 @Getter
 @AllArgsConstructor
 public class ProjectProgressResponse {
+    private Long id;
     private String name;
     private Integer progress;
     private Integer dDay;

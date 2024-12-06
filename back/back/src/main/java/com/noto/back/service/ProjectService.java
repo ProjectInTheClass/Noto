@@ -33,9 +33,9 @@ public class ProjectService {
 
             LocalDate startDate = (LocalDate) result[4];
             LocalDate endDate = (LocalDate) result[5];
-
+            Long id = (Long) result[6];
             ProjectProgressResponse response = new ProjectProgressResponse(
-                    name, progress, daysRemaining, userNames, startDate, endDate
+                    id, name, progress, daysRemaining, userNames, startDate, endDate
             );
             responseList.add(response);
         }
