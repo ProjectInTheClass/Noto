@@ -95,6 +95,68 @@ struct settingRow: View {
   }
 }
 
+// 행 컴포넌트
+struct titleRow_1: View {
+  var title: String
+  
+  var body: some View {
+    HStack {
+      Text(title)
+        .titleFont()
+        .lineLimit(1)
+        .truncationMode(.tail)
+    }
+    .frame(maxWidth: .infinity, alignment: .leading)
+    .padding(.horizontal, 20)
+  }
+}
+
+struct titleRow_2: View {
+  var title: String
+  var imageName: String
+  var imageSize: CGFloat
+  
+  var body: some View {
+    HStack {
+      Image(imageName)
+        .resizable()
+        .frame(width: imageSize, height: imageSize)
+        .padding(.trailing, 5)
+      Text(title)
+        .titleFont()
+        .lineLimit(1)
+        .truncationMode(.tail)
+    }
+    .frame(maxWidth: .infinity, alignment: .leading)
+    .padding(.horizontal, 20)
+  }
+}
+
+struct titleRow_3: View {
+  var title: String
+  var optionAction: () -> Void
+  
+  var body: some View {
+    HStack {
+      Text(title)
+        .titleFont()
+        .lineLimit(1)
+        .truncationMode(.tail)
+      Spacer()
+      Button(action: {
+        optionAction()
+      }) {
+        Image(systemName: "ellipsis")
+          .font(.system(size: 24))
+          .foregroundColor(.customBlack)
+      }
+    }
+    .frame(maxWidth: .infinity, alignment: .leading)
+    .padding(.horizontal, 20)
+
+  }
+}
+
 enum ShapeType { case circle, rectangle }
 
 // 이미지 컴포넌트(크기는 정형 (n x n))
@@ -120,6 +182,7 @@ struct imageComponent: View {
   }
 }
 
+// 입력창 컴포넌트
 struct inputComponent: View {
   @Binding var userInput: String
   var placeholder: String
