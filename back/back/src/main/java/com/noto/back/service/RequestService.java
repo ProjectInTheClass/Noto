@@ -39,6 +39,9 @@ public class RequestService {
     public RequestInfoResponse getRequestInfo(Long requestId, Long userId) {
         requestReceiveRepository.updateReadOrNot(requestId, userId);
 
+        User tempUser = userRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("User Not Found"));
+
         List<Object[]> results = requestRepository.getRequestInfo(requestId);
 
         Object[] result = results.get(0);
@@ -54,6 +57,10 @@ public class RequestService {
 
         List<String> receivers = Arrays.asList(receiverNames.split(","));
         Long id = (Long)result[8];
+        Boolean isSender = false;
+        if (tempUser.getName().equals(senderName)) {
+            isSender = true;
+        }
         return RequestInfoResponse.builder()
                 .id(id)
                 .project(projectName)
@@ -64,6 +71,7 @@ public class RequestService {
                 .endDate(endDate)
                 .receivers(receivers)
                 .sender(senderName)
+                .isSender(isSender)
                 .build();
     }
 

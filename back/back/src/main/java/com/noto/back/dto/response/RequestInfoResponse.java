@@ -16,6 +16,7 @@ public record RequestInfoResponse(
         List<String> receivers,
         String sender,
         String title,
-        String content
+        String content,
+        Boolean isSender
 ) {
 }
