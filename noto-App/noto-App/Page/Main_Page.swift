@@ -1,7 +1,7 @@
 import SwiftUI
 
 enum Tab { case settings, home, projects }
-enum Page { case main, requestList, todoDetail, progressList, todoList, projectDetail }
+enum Page { case main, requestList, requestDetail, todoDetail, progressList, todoList, projectDetail }
 
 struct MainPage_ContentView: View {
   @State private var selectedTab: Tab = .home
@@ -31,7 +31,10 @@ struct MainPage_ContentView_Preview: PreviewProvider {
 struct mainPage: View {
   @State private var searchText = ""
   @State private var currentScreen: Page = .main
-  @State private var clickedIndex: Int? = 0
+  @State private var selectedId: Int = 0
+  @State private var selectedRid: Int = 0
+  @State private var selectedRequestType: Int = 0
+  @State private var selectedRequestRejected: Int = 0
   @Binding var selectedTab: Tab
   
   
@@ -55,7 +58,7 @@ struct mainPage: View {
                     subtitle: todo.subtitle,
                     action: {
                       currentScreen = .todoDetail
-                      clickedIndex = index // 클릭된 인덱스 저장
+                      selectedId = index // 클릭된 인덱스 저장
                     }
                   )
                 }
@@ -64,7 +67,7 @@ struct mainPage: View {
                     .padding(.horizontal, 20)
                 }
               }
-              viewAllComponent(title: "오늘 내 할 일 모두 보기", action: {currentScreen = .progressList})
+              viewAllComponent(title: "오늘 내 할 일 모두 보기", action: {currentScreen = .todoList})
             }
             .blockStyle(height: .infinity)
             
@@ -73,8 +76,8 @@ struct mainPage: View {
                 simpleProgressRow(title: projectList[index].name,
                                   progress: projectList[index].progress,
                                   Dday: calculateDDay(from: projectList[index].startDate, to: projectList[index].endDate),
-                                  action: { print("프로젝트 클릭 수정 필요")
-                                            clickedIndex = index})
+                                  action: { currentScreen = .projectDetail
+                                  selectedId = projectList[index].pid})
               }
               
               viewAllComponent(title: "프로젝트 진행 현황 모두 보기", action: {currentScreen = .progressList})
@@ -88,13 +91,26 @@ struct mainPage: View {
         }
         .scrollViewStyle()
       } else if(currentScreen == .requestList) {
-        RequestPage(currentScreen: $currentScreen)
+        RequestListPage(currentScreen: $currentScreen,
+                        selectedRid: $selectedRid,
+                        selectedRequestType: $selectedRequestType,
+                        selectedRequestRejected: $selectedRequestRejected)
       } else if(currentScreen == .todoDetail) {
-        TodoDetialPage(currentScreen: $currentScreen, prevScreen: .main, index: clickedIndex ?? 0)
+        TodoDetialPage(currentScreen: $currentScreen, prevScreen: .main, index: selectedId)
       } else if(currentScreen == .progressList) {
-        ProgressDetailPage(currentScreen: $currentScreen, prevScreen: .main, index: clickedIndex ?? 0)
+        ProgressDetailPage(currentScreen: $currentScreen, prevScreen: .main, pid: selectedId)
       } else if(currentScreen == .todoList) {
-        
+        // 여기는 모달 올라오게 만들기
+      } else if(currentScreen == .requestDetail) {
+        RequestDetailPage(currentScreen: $currentScreen,
+                          prevScreen: .main,
+                          rid: selectedRid,
+                          type: selectedRequestType,
+                          rejected: selectedRequestRejected)
+      } else if(currentScreen == .projectDetail) {
+        ProjectPage(currentScreen: $currentScreen,
+                    prevScreen: currentScreen,
+                    pid: selectedId)
       }
     }
   }
@@ -109,3 +125,5 @@ struct ProjectSelectionView: View {
         }
     }
 }
+
+

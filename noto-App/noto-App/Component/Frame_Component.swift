@@ -55,6 +55,13 @@ struct viewAllComponent: View {
   }
 }
 
+struct dumyBottom: View {
+  var body: some View {
+    VStack {}
+      .frame(width: 120, height: 90)
+  }
+}
+
 // 컴포넌트 정의
 extension View {
   func scrollViewStyle() -> some View {
