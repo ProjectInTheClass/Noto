@@ -74,7 +74,8 @@ public class ProjectService {
         List<ProjectListEntity> projects = projectListEntities.stream()
                 .map(result -> new ProjectListEntity(
                         (String) result[0], // 이름
-                        (Long) result[1]    // ID
+                        (Long) result[1],
+                        (String) result[2]
                 ))
                 .collect(Collectors.toList());
 

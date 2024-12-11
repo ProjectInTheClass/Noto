@@ -54,8 +54,10 @@ public class RequestService {
         String senderName = (String) result[5];
         String receiverNames = (String) result[6];
         String scheduleName = (String) result[7]; // 일정 이름
-
-        List<String> receivers = Arrays.asList(receiverNames.split(","));
+        List<String> receivers = new ArrayList<>();
+        if (receiverNames != null) {
+            receivers = Arrays.asList(receiverNames.split(","));
+        }
         Long id = (Long)result[8];
         Boolean isSender = false;
         if (tempUser.getName().equals(senderName)) {

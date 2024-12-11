@@ -7,6 +7,7 @@ import lombok.Setter;
 @Builder
 public record ProjectListEntity(
         String name,
-        Long projectId
+        Long projectId,
+        String description
 ) {
 }
