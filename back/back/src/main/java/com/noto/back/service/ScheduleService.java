@@ -166,7 +166,7 @@ public class ScheduleService {
             // ScheduleParticipateId는 JPA가 @MapsId로 자동 생성
             scheduleParticipateRepository.save(ss);
         }
-
+        updateProjectProgress(request.projectId());
         return ScheduleResponse.builder()
                 .id(savedSchedule.getId())
                 .name(savedSchedule.getName())
