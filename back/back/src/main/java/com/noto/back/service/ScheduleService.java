@@ -142,6 +142,7 @@ public class ScheduleService {
         schedule.setTag(request.tag());
         schedule.setUrl(request.url());
         schedule.setProject(project);
+        schedule.setCompleted(false);
 
         Schedule savedSchedule = scheduleRepository.save(schedule);
 

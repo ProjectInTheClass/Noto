@@ -18,12 +18,18 @@ tfoot, thead, tr, th, td, article, aside,
 canvas, details, embed, figure, figcaption,
 footer, header, hgroup, menu, nav, output, ruby,
 section, summary, time, mark, audio, video {
+	text-align: justify;
 	margin: 0;
 	padding: 0;
 	border: 0;
 	font-size: 100%;
 	font: inherit;
 	vertical-align: baseline;}
+
+p {
+	line-height: 1.6; /* Increase line height for readability */	
+	margin-bottom: 1rem; /* Add spacing between paragraphs */
+}
 
 article, aside, details, figcaption, figure,
 footer, header, hgroup, menu, nav, section {

@@ -91,7 +91,7 @@ public class ProjectService {
         project.setImage(request.image());
         project.setStartDate(request.startDate());
         project.setEndDate(request.endDate());
-
+        project.setProgress(0);
         // 프로젝트 저장
         Project savedProject = projectRepository.save(project);
 
