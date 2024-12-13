@@ -1,32 +1,32 @@
 import SwiftUI
 
 // inner는 추후 삭제
-enum Screen { case settings, user, pw, alarm, display, client, faq, info }
+//enum Screen { case settings, user, pw, alarm, display, client, faq, info }
 
-struct SettingPage_ContentView: View {
-  @State private var currentScreen: Screen = .settings
-  
-  var body: some View {
-    VStack {
-      if currentScreen == .settings {
-        SettingPage()
-      } else if currentScreen == .user {
-        
-      }
-    }
-  }
-}
-
-struct SettingPage_ContentView_Preview: PreviewProvider {
-  static var previews: some View {
-    SettingPage_ContentView()
-  }
-}
+//struct SettingPage_ContentView: View {
+//  @State private var currentScreen: Screen = .settings
+//  
+//  var body: some View {
+//    VStack {
+//      if currentScreen == .settings {
+//          SettingPage(currentScreen: $currentScreen)
+//      } else if currentScreen == .user {
+//        
+//      }
+//    }
+//  }
+//}
+//
+//struct SettingPage_ContentView_Preview: PreviewProvider {
+//  static var previews: some View {
+//    SettingPage_ContentView()
+//  }
+//}
 
 struct SettingPage: View {
   @State private var searchText = ""
-  @State private var currentScreen: Screen = .settings
-  private var personIndex: Int = 0
+  @Binding var currentScreen: Page
+  var personIndex: Int = 0
   
   var body: some View {
     VStack(alignment: .leading) {
@@ -69,6 +69,9 @@ struct SettingPage: View {
         .backgroundStyle()
       }
       .scrollViewStyle()
+      .onAppear {
+          currentScreen = .settings
+      }
     }
   }
 }
