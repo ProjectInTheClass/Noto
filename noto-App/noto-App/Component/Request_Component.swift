@@ -2,7 +2,7 @@ import SwiftUI
 
 // 리퀘스트 및 알림 컴포넌트
 struct requestComponent: View {
-  @State var req_count: Int
+  let req_count: Int
   var action: () -> Void
   
   var body: some View {

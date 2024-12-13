@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct barGraphComponent: View {
-  var progress: Double
+  var progress: Int
   var width: CGFloat
   var height: CGFloat
   
@@ -10,22 +10,25 @@ struct barGraphComponent: View {
       Capsule()
         .frame(width: width, height: height)
         .foregroundColor(.customLightGray)
-      ZStack(alignment: .center) {
-        Capsule()
-          .frame(width: width * progress, height: height)
-          .foregroundColor(.customBlue)
-          .animation(.easeInOut, value: progress)
-        Text("\(progress * 100, specifier: "%.2f")%")
-          .font(.custom("Freesentation-7Bold", size: 9))
-          .foregroundColor(.customLightGray)
-      }
+        ZStack(alignment: .center) {
+            // Foreground capsule with blue color
+            Capsule()
+                .frame(width: width * CGFloat(progress) / 100, height: height) // Convert progress to CGFloat and scale by 100%
+                .foregroundColor(.customBlue)
+                .animation(.easeInOut, value: progress)
+            
+            // Text showing the progress as a percentage
+            Text("\(progress, specifier: "%.d")%")
+                .font(.custom("Freesentation-7Bold", size: 9))
+                .foregroundColor(.customLightGray)
+        }
     }
   }
 }
 
 struct simpleProgressRow: View {
   var title: String
-  var progress: Double
+  var progress: Int
   var Dday : Int
   var action: () -> Void
   
@@ -43,7 +46,7 @@ struct simpleProgressRow: View {
             .foregroundColor(.customBlack)
           
           Spacer()
-          Text("D-\(Dday)")
+          Text("D\(Dday)")
             .descriptionFont()
             .padding(.trailing, 5)
         }
