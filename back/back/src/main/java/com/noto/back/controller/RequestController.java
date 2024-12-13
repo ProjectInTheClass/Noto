@@ -65,7 +65,7 @@ public class RequestController {
 
     @PostMapping("")
     @Operation(summary = "리퀘스트 생성하기", description = "리퀘스트 생성하기 (리퀘스트 전송하기)")
-    public ApiResponse<RequestInfoResponse> postRequest(PostRequestRequest request) {
+    public ApiResponse<RequestInfoResponse> postRequest(@RequestBody PostRequestRequest request) {
         RequestInfoResponse requestInfoResponse = requestService.postRequest(request);
 
         return ApiResponse.<RequestInfoResponse>builder()
@@ -76,7 +76,7 @@ public class RequestController {
 
     @PatchMapping("/{requestId}")
     @Operation(summary = "리퀘스트 응답하기", description = "리퀘스트 응답하기 (리퀘스트 응답 모달)")
-    public ApiResponse<Void> putRequest(PutRequestRequest request, @RequestParam Long requestId) {
+    public ApiResponse<Void> putRequest(@RequestBody PutRequestRequest request, @RequestParam Long requestId) {
         requestService.putRequest(request, requestId);
 
         return ApiResponse.<Void>builder()
