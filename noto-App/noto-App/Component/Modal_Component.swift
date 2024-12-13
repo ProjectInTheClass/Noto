@@ -71,7 +71,7 @@ struct modalTodoListView: View {
                             .sheet(isPresented: $showingSheet, onDismiss: {
                                 showingSheet = false
                             }){
-                                modalTodoView(modifiedSid: $modifiedSid, selectedPid: $selectedPid)
+                                modalTodoView(currentScreen: $currentScreen, modifiedSid: $modifiedSid, selectedPid: $selectedPid, selectedSid: $selectedSid)
                             }
                             Button("일정 삭제", role: .destructive) {
                                 Task {
@@ -115,10 +115,13 @@ struct modalTodoListView: View {
             .sheet(isPresented: $showingSheet, onDismiss: {
                 showingSheet = false
             }){
-                modalTodoView(modifiedSid: $modifiedSid, selectedPid: $selectedPid)
+                modalTodoView(currentScreen: $currentScreen, modifiedSid: $modifiedSid, selectedPid: $selectedPid, selectedSid: $selectedSid)
             }
         }
         .modalPresentation()
+        .onChange(of: currentScreen) {
+            dismiss()
+        }
     }
 }
 
@@ -287,7 +290,7 @@ struct modalProjectListView: View {
                             .sheet(isPresented: $showingSheet, onDismiss: {
                                 showingSheet = false
                             }){
-                                modalProjectView(modifiedPid: $modifiedPid)
+                                modalProjectView(modifiedPid: $modifiedPid, currentScreen: $currentScreen, selectedPid: $selectedPid)
                             }
                             Button("프로젝트 삭제", role: .destructive) {
                                 Task {
@@ -331,7 +334,7 @@ struct modalProjectListView: View {
             .sheet(isPresented: $showingSheet, onDismiss: {
                 showingSheet = false
             }){
-                modalProjectView(modifiedPid: $modifiedPid)
+                modalProjectView(modifiedPid: $modifiedPid, currentScreen: $currentScreen, selectedPid: $selectedPid)
             }
         }
         .modalPresentation()
@@ -345,6 +348,9 @@ struct modalProjectListView: View {
             } catch {
                 print("Error fetching data: \(error.localizedDescription)")
             }
+        }
+        .onChange(of: currentScreen) {
+            dismiss()
         }
     }
 }
@@ -363,8 +369,10 @@ struct modalTodoView: View {
     @State private var url: String = ""
     @State private var isParticipantsListVisible: Bool = false  // 추가된 상태 변수
     
+    @Binding var currentScreen: Page
     @Binding var modifiedSid: Int
     @Binding var selectedPid: Int
+    @Binding var selectedSid: Int
     
     // 완료 버튼 활성화 조건
     private var isCompleteButtonEnabled: Bool {
@@ -390,12 +398,20 @@ struct modalTodoView: View {
                             if modifiedSid == 0 {
                                 let response = try await post(url: "https://www.bestbirthday.co.kr:8080/api/schedule", body: RequestSchedule(projectId: selectedPid, name: name, startDate: startDate, endDate: endDate, participants: participants, description: description, tag: tag, url: url), responseType: ScheduleInfo.self)
                                 print(response)
+                                scheduleInfoData = response.data
                             } else {
                                 let response = try await put(url: "https://www.bestbirthday.co.kr:8080/api/schedule" + "/\(modifiedSid)", body: RequestSchedule(projectId: selectedPid, name: name, startDate: startDate, endDate: endDate, participants: participants, description: description, tag: tag, url: url), responseType: ScheduleInfo.self)
                                 print(response)
                             }
                             
                             dismiss()
+                            
+                            if let scheduleInfoData = scheduleInfoData {
+                                DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.001) {
+                                    currentScreen = .todoDetail
+                                    selectedSid = scheduleInfoData.id
+                                }
+                            }
                         } catch {
                             if modifiedSid == 0 {
                                 print("일정 생성 실패: \(error.localizedDescription)")
@@ -581,6 +597,8 @@ struct modalProjectView: View {
     @State private var projectData: Project? = nil
     
     @Binding var modifiedPid: Int
+    @Binding var currentScreen: Page
+    @Binding var selectedPid: Int
     
     // 완료 버튼 활성화 조건
     private var isCompleteButtonEnabled: Bool {
@@ -614,6 +632,13 @@ struct modalProjectView: View {
                                             let response = try await post(url: "https://www.bestbirthday.co.kr:8080/api/user/participate", body: RequestUserParticipate(userId: 1, projectId: projectData.id), responseType: String?.self)
                                             
                                             print(response)
+                                            // 두 번째 모달을 닫음
+                                            dismiss()
+                                            
+                                            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.001) {
+                                                currentScreen = .projectDetail
+                                                selectedPid = projectData.id
+                                            }
                                         }
                                     } catch {
                                         print("유저 참가 실패: \(error.localizedDescription)")
@@ -759,15 +784,15 @@ struct modalRequestView: View {
                     .frame(maxWidth: .infinity, alignment: .leading)
                 
                 Button(action: {
+                    print("리퀘스트 전송")
                     Task {
                         do {
-//                            let response = try await post(url: "https://www.bestbirthday.co.kr:8080/api/request" + "?projectId=\(projectId)" + "&scheduleId=\(scheduleId)" + "&receivers=string&sender=0&title=string&content=string", body: RequestSchedule(projectId: selectedPid, name: name, startDate: startDate, endDate: endDate, participants: participants, description: description, tag: tag, url: url), responseType: ScheduleInfo.self)
-//                            print(response)
-                            
-                            dismiss()
+                            let response = try await post(url: "https://www.bestbirthday.co.kr:8080/api/request", body: RequestRequest(projectId: projectId, scheduleId: scheduleId, receivers: receivers, sender: sender, title: title, content: content), responseType: RequestInfo.self)
+                            print(response)
                         } catch {
                             print("리퀘스트 전송 실패: \(error.localizedDescription)")
                         }
+                        dismiss()
                     }
                 }) {
                     Text("전송")
@@ -786,7 +811,7 @@ struct modalRequestView: View {
             }) {
                 Text("프로젝트 선택")
                     .foregroundColor(.black)
-                    .frame(maxWidth: 100, maxHeight: 40) // 크기 설정
+                    .frame(maxWidth: 350, maxHeight: 40) // 크기 설정
                     .background(Color.white) // 배경색 설정
                     .cornerRadius(8) // 둥근 모서리
                     .shadow(radius: 5) // 약간의 그림자 효과
@@ -838,7 +863,7 @@ struct modalRequestView: View {
             }) {
                 Text("일정 선택")
                     .foregroundColor(.black)
-                    .frame(maxWidth: 100, maxHeight: 40) // 크기 설정
+                    .frame(maxWidth: 350, maxHeight: 40) // 크기 설정
                     .background(Color.white) // 배경색 설정
                     .cornerRadius(8) // 둥근 모서리
                     .shadow(radius: 5) // 약간의 그림자 효과
@@ -901,7 +926,7 @@ struct modalRequestView: View {
             }) {
                 Text("수신자 선택")
                     .foregroundColor(.black)
-                    .frame(maxWidth: 100, maxHeight: 40) // 크기 설정
+                    .frame(maxWidth: 350, maxHeight: 40) // 크기 설정
                     .background(Color.white) // 배경색 설정
                     .cornerRadius(8) // 둥근 모서리
                     .shadow(radius: 5) // 약간의 그림자 효과
@@ -1019,7 +1044,10 @@ struct modalRequestView: View {
 // 리퀘스트 거부 모달 컴포넌트
 struct modalRequestRejectView: View {
     @Environment(\.dismiss) var dismiss
+    @Binding var receiverId: Int
     @Binding var comment: String
+    @Binding var status: String
+    @Binding  var selectedRid: Int
     
     // 완료 버튼 활성화 조건
     private var isCompleteButtonEnabled: Bool {
@@ -1034,10 +1062,11 @@ struct modalRequestRejectView: View {
                     .frame(maxWidth: .infinity, alignment: .leading)
                 
                 Button(action: {
+                    status = "거절"
                     Task {
                         do {
-//                            let response = try await post(url: "https://www.bestbirthday.co.kr:8080/api/request" + "?projectId=\(projectId)" + "&scheduleId=\(scheduleId)" + "&receivers=string&sender=0&title=string&content=string", body: RequestSchedule(projectId: selectedPid, name: name, startDate: startDate, endDate: endDate, participants: participants, description: description, tag: tag, url: url), responseType: ScheduleInfo.self)
-//                            print(response)
+                            let response = try await patch(url: "https://www.bestbirthday.co.kr:8080/api/request" + "/\(selectedRid)", body: RequestRequestReceived(receiverId: receiverId, comment: comment, status: status))
+                            print(response)
                             
                             dismiss()
                         } catch {

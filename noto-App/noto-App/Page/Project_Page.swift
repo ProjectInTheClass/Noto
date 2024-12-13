@@ -59,7 +59,7 @@ struct ProjectPage: View {
                                     .sheet(isPresented: $showingModalProject, onDismiss: {
                                         showingModalProject = false
                                     }) {
-                                        modalProjectView(modifiedPid: $selectedPid)
+                                        modalProjectView(modifiedPid: $selectedPid, currentScreen: $currentScreen, selectedPid: $selectedPid)
                                     }
                                     Divider()
                                         .padding(10)
@@ -299,12 +299,12 @@ struct CalendarGridView: View {
   
   // 특정 날짜에 이벤트가 있는지 확인
   private func eventForDate(_ date: Date) -> Todo? {
-      for todo in todolist {
-          if calendar.isDate(date, inSameDayAs: todo.startDate) ||
-              (todo.startDate...todo.endDate).contains(date) {
-              return todo
-          }
-      }
+//      for todo in todolist {
+//          if calendar.isDate(date, inSameDayAs: todo.startDate) ||
+//              (todo.startDate...todo.endDate).contains(date) {
+//              return todo
+//          }
+//      }
       return nil
   }
   

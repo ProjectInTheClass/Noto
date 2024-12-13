@@ -43,6 +43,18 @@ struct RequestListPage: View {
               })
               .sheet(isPresented: $showingRequest, onDismiss: {
                   showingRequest = false
+                  
+                  Task {
+                      do {
+                          let requestListResponse = try await get(url: url + "/request/list?userId=1", responseType: RequestList.self)
+                          // Handle the response here
+                          print(requestListResponse)
+                          
+                          requestListData = requestListResponse.data
+                      } catch {
+                          print("Error fetching data: \(error.localizedDescription)")
+                      }
+                  }
               }){
                   modalRequestView()
               }

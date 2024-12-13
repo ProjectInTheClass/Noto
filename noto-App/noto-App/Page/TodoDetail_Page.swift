@@ -16,6 +16,7 @@ import SwiftUI
 //}
 
 struct TodoDetialPage: View {
+    @Environment(\.dismiss) var dismiss
   @State private var scheduleInfoData: ScheduleInfo? = nil
   @State private var showingSheet: Bool = false
   @Binding var currentScreen: Page
@@ -38,16 +39,7 @@ struct TodoDetialPage: View {
                       let response = try await putNoneBody(url: url + "/schedule/complete" + "/\(selectedSid)")
                       // Handle the response here
                       print(response)
-                      
-                      Task {
-                          do {
-                              let response = try await delete(url: url + "/schedule" + "/\(selectedSid)")
-                              // Handle the response here
-                              print(response)
-                          } catch {
-                              print("Error fetching data: \(error.localizedDescription)")
-                          }
-                      }
+                      currentScreen = prevScreen
                   } catch {
                       print("Error fetching data: \(error.localizedDescription)")
                   }
@@ -64,7 +56,7 @@ struct TodoDetialPage: View {
                     .sheet(isPresented: $showingSheet, onDismiss: {
                         showingSheet = false
                     }) {
-                        modalTodoView(modifiedSid: $selectedSid, selectedPid: $selectedPid)
+                        modalTodoView(currentScreen: $currentScreen, modifiedSid: $selectedSid, selectedPid: $selectedPid, selectedSid: $selectedSid)
                     }
                     Divider()
                         .padding(.horizontal, 20)
@@ -105,6 +97,9 @@ struct TodoDetialPage: View {
           } catch {
               print("Error fetching data: \(error.localizedDescription)")
           }
+      }
+      .onChange(of: currentScreen) {
+          dismiss()
       }
     }
   }

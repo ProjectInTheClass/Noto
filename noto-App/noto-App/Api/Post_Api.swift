@@ -24,11 +24,11 @@ func post<T: Codable, U: Codable>(url: String, body: U, responseType: T.Type) as
     let encoder = JSONEncoder()
     
     // 날짜 포맷 설정
-    let formatter = DateFormatter()
-    formatter.dateFormat = "yyyy-MM-dd"  // 서버에서 요구하는 날짜 형식으로 설정
+    let formatter0 = DateFormatter()
+    formatter0.dateFormat = "yyyy-MM-dd"  // 서버에서 요구하는 날짜 형식으로 설정
     
     // JSONEncoder에 날짜 인코딩 전략 설정
-    encoder.dateEncodingStrategy = .formatted(formatter)
+    encoder.dateEncodingStrategy = .formatted(formatter0)
     
     let bodyData = try encoder.encode(body)
     request.httpBody = bodyData
@@ -43,9 +43,13 @@ func post<T: Codable, U: Codable>(url: String, body: U, responseType: T.Type) as
 
     // Create a JSON decoder
     let decoder = JSONDecoder()
+    
+    // Custom DateFormatter for the expected date format
+    let formatter1 = DateFormatter()
+    formatter1.dateFormat = "yyyy-MM-dd"  // Specify your custom date format here
 
     // Set the custom formatter to the decoder
-    decoder.dateDecodingStrategy = .formatted(formatter)
+    decoder.dateDecodingStrategy = .formatted(formatter1)
 
     // Decode the API response
     let apiResponse = try decoder.decode(ApiModel<T>.self, from: data)

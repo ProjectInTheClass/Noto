@@ -205,8 +205,8 @@ struct mainPage: View {
                         if let progress = projectProgress.progress{
                             simpleProgressRow(title: projectProgress.name,
                                               progress: progress,
-                                              Dday: -projectProgress.dday,
-                                              action: { currentScreen = .projectDetail })
+                                              Dday: projectProgress.dday,
+                                              action: {})
                         }
                     }
                 }

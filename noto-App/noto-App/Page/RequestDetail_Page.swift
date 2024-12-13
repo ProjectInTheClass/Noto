@@ -32,7 +32,7 @@ struct RequestDetailPage: View {
     @State private var showingSheet: Bool = false
     @State private var showingDialog: Bool = false
     
-    @State private var receiverId: Int = 0
+    @State private var receiverId: Int = 1
     @State private var comment: String = ""
     @State private var status: String = ""
     
@@ -66,6 +66,7 @@ struct RequestDetailPage: View {
                               Button("수락", role: .none) {
                                   print("수락")
                                   status = "수락"
+                                  print("\(selectedRid)")
                                   Task {
                                       let response = try await patch(url: url + "/request" + "/\(selectedRid)", body: RequestRequestReceived(receiverId: receiverId, comment: comment, status: status))
                                       // Handle the response here
@@ -83,7 +84,7 @@ struct RequestDetailPage: View {
                           }
                           .padding(.top, 10)
                           .sheet(isPresented: $showingSheet) {
-                              modalRequestRejectView(comment: $comment)
+                              modalRequestRejectView(receiverId: $receiverId, comment: $comment, status: $status, selectedRid: $selectedRid)
                           }
                       } else {
                           titleRow_1(title: title)
