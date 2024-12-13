@@ -18,6 +18,7 @@ public interface ScheduleRepository extends JpaRepository<Schedule, Long> {
         WHERE sp.id.userId = :userId
           AND s.startDate <= :currentDate
           AND s.endDate >= :currentDate
+          AND s.completed = false
     """)
     List<Schedule> findSchedulesByUserIdAndDate(
             @Param("userId") Long userId,
@@ -25,7 +26,7 @@ public interface ScheduleRepository extends JpaRepository<Schedule, Long> {
     );
 
     @Query("SELECT s FROM Schedule s " +
-            "WHERE s.project.id = :projectId ")
+            "WHERE s.project.id = :projectId AND s.completed = false")
     List<Schedule> findSchedulesOfTheProject(Long projectId);
 
     @Query("""
