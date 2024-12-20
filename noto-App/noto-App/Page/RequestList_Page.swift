@@ -1,23 +1,22 @@
 import SwiftUI
 
-//struct RequestPage_ContentView: View {
-//  @State private var currentScreen: Page = .requestList
-//  @State private var rid: Int = 0
-//  @State private var type: Int = 1
-//  @State private var rejected: Int = 1
-//  var body: some View {
-//    RequestListPage(currentScreen: $currentScreen,
-//                    selectedRid: $rid,
-//                    selectedRequestType: $type,
-//                    selectedRequestRejected: $rejected)
-//  }
-//}
-//
-//struct RequestPage_ContentView_Preview: PreviewProvider {
-//  static var previews: some View {
-//    RequestPage_ContentView()
-//  }
-//}
+struct RequestPage_ContentView: View {
+  @State private var currentScreen: Page = .requestList
+  @State private var rid: Int = 0
+  @State private var type: Int = 1
+  @State private var rejected: Int = 1
+  var body: some View {
+    RequestListPage(currentScreen: $currentScreen,
+                    selectedRid: $rid,
+                    prevScreen: .main)
+  }
+}
+
+struct RequestPage_ContentView_Preview: PreviewProvider {
+  static var previews: some View {
+    RequestPage_ContentView()
+  }
+}
 
 
 struct RequestListPage: View {
@@ -28,9 +27,9 @@ struct RequestListPage: View {
   @Binding  var selectedRid: Int
   var prevScreen: Page
     
-    @State private var requestListData: RequestList? = nil
+  @State private var requestListData: RequestList? = nil
     
-    let url = "https://www.bestbirthday.co.kr:8080/api"
+  let url = "https://www.bestbirthday.co.kr:8080/api"
   
   var body: some View {
     VStack {

@@ -753,292 +753,400 @@ struct modalProjectView: View {
     }
 }
 
+struct inputRequestData {
+  var projectId: Int = 0
+  var scheduleId: Int = 0
+  var receivers: [String] = []
+  var sender: Int = 1
+  var title: String = ""
+  var content: String = ""
+}
+
+struct requestModalHeader: View {
+  @Environment(\.dismiss) var dismiss
+  @Binding var inputData: inputRequestData
+  
+  var body: some View {
+    // 완료 버튼 활성화 조건
+    var isCompleteButtonEnabled: Bool {
+      inputData.projectId != 0 && inputData.scheduleId != 0 && !inputData.receivers.isEmpty && !inputData.title.isEmpty
+    }
+    
+    HStack {
+        Text("리퀘스트 전송")
+            .titleFont()
+            .frame(maxWidth: .infinity, alignment: .leading)
+        
+        Button(action: {
+            print("리퀘스트 전송")
+            Task {
+                do {
+                  let response = try await post(url: "https://www.bestbirthday.co.kr:8080/api/request", body: RequestRequest(projectId: inputData.projectId, scheduleId: inputData.scheduleId, receivers: inputData.receivers, sender: inputData.sender, title: inputData.title, content: inputData.content), responseType: RequestInfo.self)
+                  print(response)
+                } catch {
+                    print("리퀘스트 전송 실패: \(error.localizedDescription)")
+                }
+                dismiss()
+            }
+        }) {
+            Text("전송")
+                .frame(maxWidth: .infinity, alignment: .trailing)
+                .font(.custom("Freesentation-7Bold", size: 18))
+                .foregroundColor(isCompleteButtonEnabled ? .blue : .gray)  // 버튼 색상 변경
+        }
+        .disabled(!isCompleteButtonEnabled)  // 활성화 조건에 따라 버튼 활성화/비활성화
+    }
+  }
+}
+
+struct requestProjectOptionRow: View {
+  var title: String
+  var selectedItem: String
+  var action: () -> Void
+  
+  var body: some View {
+    Button(action: action) {
+      HStack {
+        Text(title)
+          .subTitleFont()
+          .lineLimit(1)
+          .truncationMode(.tail)
+        
+        Spacer()
+        
+        Text(selectedItem)
+          .projectContentFont()
+          .lineLimit(1)
+          .truncationMode(.tail)
+      }
+      .frame(maxWidth: .infinity, alignment: .leading)
+      .padding(.horizontal, 20)
+    }
+  }
+}
+
+struct receiverOptionRow: View {
+  var selectedItem: [String]
+  var action: () -> Void
+  
+  var body: some View {
+    Button(action: action) {
+      HStack {
+        Text("수신자 선택")
+          .subTitleFont()
+          .lineLimit(1)
+          .truncationMode(.tail)
+        
+        Spacer()
+        
+        if selectedItem.count >= 5 {
+          ScrollView(.horizontal, showsIndicators: false) {
+            HStack(spacing: 10) {
+              ForEach(selectedItem, id: \.self) { receiver in
+                Text(receiver)
+                  .projectContentFont()
+                  .padding(.vertical, 5)
+              }
+            }
+          }
+          .frame(maxWidth: 200)
+        } else {
+          HStack(spacing: 10) {
+            ForEach(selectedItem, id: \.self) { receiver in
+              Text(receiver)
+                .projectContentFont()
+                .padding(.vertical, 5)
+            }
+          }
+        }
+      }
+      .padding(.horizontal, 20)
+    }
+  }
+}
+
+struct titleOptionRow: View {
+  @Binding var title : String
+  var placeholder: String = "리퀘스트 제목"
+  
+  var body: some View {
+    ZStack(alignment: .topLeading) {
+      // TextEditor
+      TextEditor(text: $title)
+        .subTitleFont()
+        .padding(5) // TextEditor 내부 여백
+        .frame(maxWidth: 350, maxHeight: 50) // 크기 설정
+        .cornerRadius(8) // 둥근 모서리
+        .overlay(
+          RoundedRectangle(cornerRadius: 8)
+            .stroke(Color.customLightGray, lineWidth: 0.5) // 테두리 스타일
+        )
+      
+      // Placeholder
+      if title.isEmpty {
+        Text("리퀘스트 제목")
+          .font(.custom("Freesentation-6SemiBold", size: 15))
+          .foregroundColor(.customLightGray)
+          .padding(.top, 15)
+          .padding(.leading, 11)
+      }
+    }
+  }
+}
+
+struct commentOptionRow: View {
+  @Binding var content: String
+  var placeholder: String = "리퀘스트 설명"
+  
+  var body: some View {
+    ZStack(alignment: .topLeading) {
+      // TextEditor
+      TextEditor(text: $content)
+        .subTitleFont()
+        .padding(5) // TextEditor 내부 여백
+        .frame(maxWidth: 350, maxHeight: 200) // 크기 설정
+        .cornerRadius(8) // 둥근 모서리
+        .overlay(
+          RoundedRectangle(cornerRadius: 8)
+            .stroke(Color.customLightGray, lineWidth: 0.5) // 테두리 스타일
+        )
+      
+      // Placeholder
+      if content.isEmpty {
+        Text("리퀘스트 설명")
+          .font(.custom("Freesentation-6SemiBold", size: 15))
+          .foregroundColor(.customLightGray)
+          .padding(.top, 20)
+          .padding(.leading, 11)
+      }
+    }
+  }
+}
+
+struct projectSheetView: View {
+  @Binding var projectListData: ProjectList?
+  @Binding var inputData: inputRequestData
+  @Binding var isProjectsListVisible: Bool
+  
+  var body: some View {
+    VStack {
+      if let availableProjects = projectListData?.projects {
+        if availableProjects.isEmpty {
+          Text("참여 중인 프로젝트가 없습니다.")
+            .descriptionFont()
+        } else {
+          List(availableProjects, id: \.self) { project in
+            HStack {
+              Text(project.name)
+                .subTitleFont()
+              Spacer()
+              ZStack {
+                if inputData.projectId == project.projectId {
+                  Image(systemName: "checkmark.square.fill")
+                    .font(.title3)
+                    .foregroundColor(.customBlue)
+                } else {
+                  Image(systemName: "square")
+                    .font(.title3)
+                    .foregroundColor(.customLightGray)
+                }
+              }
+              .onTapGesture {
+                if inputData.projectId == project.projectId {
+                  inputData.projectId = 0
+                } else {
+                  inputData.projectId = project.projectId  // 새로운 프로젝트 선택
+                  DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) {
+                    isProjectsListVisible = false // 0.5초 후에 리스트 닫기
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+struct scheduleSheetView: View {
+  @Binding var scheduleListData: [ScheduleProject]?
+  @Binding var inputData: inputRequestData
+  @Binding var isScheduleListVisible: Bool
+  
+  var body: some View {
+    VStack {
+      if let availableSchedule = scheduleListData {
+        if availableSchedule.isEmpty {
+          Text("진행 중인 할 일이 없습니다.")
+            .descriptionFont()
+        } else {
+          List(availableSchedule, id: \.self) { schedule in
+            HStack {
+              Text(schedule.name)
+                .subTitleFont()
+              Spacer()
+              ZStack {
+                if inputData.scheduleId == schedule.id {
+                  Image(systemName: "checkmark.square.fill")
+                    .font(.title3)
+                    .foregroundColor(.customBlue)
+                } else {
+                  Image(systemName: "square")
+                    .font(.title3)
+                    .foregroundColor(.customLightGray)
+                }
+              }
+              .onTapGesture {
+                if inputData.scheduleId == schedule.id {
+                  inputData.scheduleId = 0
+                } else {
+                  inputData.scheduleId = schedule.id
+                  DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) {
+                    isScheduleListVisible = false // 0.5초 후에 리스트 닫기
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+    .task {
+        do {
+          let scheduleProjectResponse = try await get(url: "https://www.bestbirthday.co.kr:8080/api/schedule/project" + "/\(inputData.projectId)", responseType: [ScheduleProject]?.self)
+            scheduleListData = scheduleProjectResponse.data
+        } catch {
+            print("Error fetching data: \(error.localizedDescription)")
+        }
+    }
+  }
+}
+
+struct receiverSheetView: View {
+  @Binding var projectData: Project?
+  @Binding var inputData: inputRequestData
+  @Binding var isParticipantListVisible: Bool
+  
+  var body: some View {
+    if isParticipantListVisible {
+      VStack {
+        if let availableReceiver = projectData?.participants {
+          if availableReceiver.isEmpty {
+            Text("리퀘스트를 보낼 수 있는 사람이 없습니다.")
+              .descriptionFont()
+          }
+          List(availableReceiver, id: \.self) { receiver in
+            HStack {
+              Text(receiver)
+                .subTitleFont()
+              Spacer()
+              ZStack {
+                if inputData.receivers.contains(receiver) {
+                  Image(systemName: "checkmark.square.fill")
+                    .font(.title3)
+                    .foregroundColor(.customBlue)
+                } else {
+                  Image(systemName: "square")
+                    .font(.title3)
+                    .foregroundColor(.customLightGray)
+                }
+              }
+              .onTapGesture {
+                if inputData.receivers.contains(receiver) {
+                  inputData.receivers = inputData.receivers.filter {
+                    $0 != receiver
+                  }
+                } else {
+                  inputData.receivers.append(receiver)
+                }
+              }
+            }
+          }
+        } else {
+          Text("프로젝트를 선택 후 확인 가능합니다.")
+            .descriptionFont()
+        }
+      }
+      .task {
+        do {
+          let projectResponse = try await get(url: "https://www.bestbirthday.co.kr:8080/api/project" + "/\(inputData.projectId)", responseType: Project.self)
+            projectData = projectResponse.data
+        } catch {
+            print("Error fetching data: \(error.localizedDescription)")
+        }
+    }
+    }
+  }
+}
+
 // 리퀘스트 모달 컴포넌트
 struct modalRequestView: View {
-    @Environment(\.dismiss) var dismiss
-    @State private var projectListData: ProjectList? = nil
-    @State private var projectData: Project? = nil
-    @State private var scheduleInfoData: ScheduleInfo? = nil
-    @State private var scheduleProjectData: [ScheduleProject]?
-    @State private var isProjectsListVisible: Bool = false  // 추가된 상태 변수
-    @State private var isScheduleListVisible: Bool = false  // 추가된 상태 변수
-    @State private var isParticipantsListVisible: Bool = false  // 추가된 상태 변수
+  @State private var projectListData: ProjectList? = nil
+  @State private var projectData: Project? = nil
+  @State private var scheduleInfoData: ScheduleInfo? = nil
+  @State private var scheduleProjectData: [ScheduleProject]?
+  @State private var isProjectsListVisible: Bool = false  // 추가된 상태 변수
+  @State private var isScheduleListVisible: Bool = false  // 추가된 상태 변수
+  @State private var isParticipantsListVisible: Bool = false  // 추가된 상태 변수
+  
+  @State private var projectId: Int = 0
+  @State private var scheduleId: Int = 0
+  @State private var receivers: [String] = []
+  @State private var sender: Int = 1
+  @State private var title: String = ""
+  @State private var content: String = ""
+  
+  @State private var inputData: inputRequestData = inputRequestData()
     
-    @State private var projectId: Int = 0
-    @State private var scheduleId: Int = 0
-    @State private var receivers: [String] = []
-    @State private var sender: Int = 1
-    @State private var title: String = ""
-    @State private var content: String = ""
-    
-    // 완료 버튼 활성화 조건
-    private var isCompleteButtonEnabled: Bool {
-        projectId != 0 && scheduleId != 0 && !receivers.isEmpty && !title.isEmpty
-    }
-    
-    var body: some View {
-        VStack(spacing: 20) {
-            HStack {
-                Text("리퀘스트 전송")
-                    .titleFont()
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                
-                Button(action: {
-                    print("리퀘스트 전송")
-                    Task {
-                        do {
-                            let response = try await post(url: "https://www.bestbirthday.co.kr:8080/api/request", body: RequestRequest(projectId: projectId, scheduleId: scheduleId, receivers: receivers, sender: sender, title: title, content: content), responseType: RequestInfo.self)
-                            print(response)
-                        } catch {
-                            print("리퀘스트 전송 실패: \(error.localizedDescription)")
-                        }
-                        dismiss()
-                    }
-                }) {
-                    Text("전송")
-                        .frame(maxWidth: .infinity, alignment: .trailing)
-                        .foregroundColor(isCompleteButtonEnabled ? .blue : .gray)  // 버튼 색상 변경
-                }
-                .disabled(!isCompleteButtonEnabled)  // 활성화 조건에 따라 버튼 활성화/비활성화
-            }
-            .padding(.leading)
-            .padding(.trailing)
-            Divider()
-            
-            // 프로젝트 선택 버튼
-            Button(action: {
-                isProjectsListVisible.toggle()  // 버튼 클릭 시 리스트 토글
-            }) {
-                Text("프로젝트 선택")
-                    .foregroundColor(.black)
-                    .frame(maxWidth: 350, maxHeight: 40) // 크기 설정
-                    .background(Color.white) // 배경색 설정
-                    .cornerRadius(8) // 둥근 모서리
-                    .shadow(radius: 5) // 약간의 그림자 효과
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 8)
-                            .stroke(Color.gray, lineWidth: 1) // 테두리 스타일
-                    )
-            }
-            
-            // 프로젝트 목록이 표시되는 부분
-            if isProjectsListVisible {
-                VStack {
-                    if let availableProjects = projectListData?.projects {
-                        List(availableProjects, id: \.self) { project in
-                            HStack {
-                                Text(project.name)
-                                Spacer()
-                                ZStack {
-                                    if projectId == project.projectId {  // 선택된 프로젝트가 있는지 확인
-                                        Image(systemName: "checkmark.square.fill")
-                                            .font(.largeTitle)
-                                    } else {
-                                        Image(systemName: "square")
-                                            .font(.largeTitle)
-                                    }
-                                }
-                                .foregroundColor(.gray)
-                                .onTapGesture {
-                                    if projectId == project.projectId {
-                                        projectId = 0
-                                    } else {
-                                        projectId = project.projectId  // 새로운 프로젝트 선택
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-                .frame(maxHeight: 200)  // List의 높이 제한
-                .background(Color.white) // 배경색
-                .cornerRadius(8)
-                .shadow(radius: 5)  // 그림자 효과
-                .padding(.top)
-            }
-            
-            // 일정 선택 버튼
-            Button(action: {
-                isScheduleListVisible.toggle()  // 버튼 클릭 시 리스트 토글
-            }) {
-                Text("일정 선택")
-                    .foregroundColor(.black)
-                    .frame(maxWidth: 350, maxHeight: 40) // 크기 설정
-                    .background(Color.white) // 배경색 설정
-                    .cornerRadius(8) // 둥근 모서리
-                    .shadow(radius: 5) // 약간의 그림자 효과
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 8)
-                            .stroke(Color.gray, lineWidth: 1) // 테두리 스타일
-                    )
-            }
-            
-            // 참가자 목록이 표시되는 부분
-            if isScheduleListVisible {
-                VStack {
-                    if let availableSchedule = scheduleProjectData {
-                        List(availableSchedule, id: \.self) { schedule in
-                            HStack {
-                                Text(schedule.name)
-                                Spacer()
-                                ZStack {
-                                    if scheduleId == schedule.id {  // 선택된 프로젝트가 있는지 확인
-                                        Image(systemName: "checkmark.square.fill")
-                                            .font(.largeTitle)
-                                    } else {
-                                        Image(systemName: "square")
-                                            .font(.largeTitle)
-                                    }
-                                }
-                                .foregroundColor(.gray)
-                                .onTapGesture {
-                                    if scheduleId == schedule.id {
-                                        scheduleId = 0
-                                    } else {
-                                        scheduleId = schedule.id  // 새로운 프로젝트 선택
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-                .frame(maxHeight: 200)  // List의 높이 제한
-                .background(Color.white) // 배경색
-                .cornerRadius(8)
-                .shadow(radius: 5)  // 그림자 효과
-                .padding(.top)
-                .task {
-                    do {
-                        let scheduleProjectResponse = try await get(url: "https://www.bestbirthday.co.kr:8080/api/schedule/project" + "/\(projectId)", responseType: [ScheduleProject]?.self)
-                        // Handle the response here
-                        print(scheduleProjectResponse)
-                        
-                        scheduleProjectData = scheduleProjectResponse.data
-                    } catch {
-                        print("Error fetching data: \(error.localizedDescription)")
-                    }
-                }
-            }
-            
-            // 참가자 선택 버튼
-            Button(action: {
-                isParticipantsListVisible.toggle()  // 버튼 클릭 시 리스트 토글
-            }) {
-                Text("수신자 선택")
-                    .foregroundColor(.black)
-                    .frame(maxWidth: 350, maxHeight: 40) // 크기 설정
-                    .background(Color.white) // 배경색 설정
-                    .cornerRadius(8) // 둥근 모서리
-                    .shadow(radius: 5) // 약간의 그림자 효과
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 8)
-                            .stroke(Color.gray, lineWidth: 1) // 테두리 스타일
-                    )
-            }
-            
-            // 참가자 목록이 표시되는 부분
-            if isParticipantsListVisible {
-                VStack {
-                    if let availableParticipants = projectData?.participants {
-                        List(availableParticipants, id: \.self) { participant in
-                            HStack {
-                                Text(participant)
-                                Spacer()
-                                ZStack {
-                                    if receivers.contains(participant) {
-                                        Image(systemName: "checkmark.square.fill")
-                                            .font(.largeTitle)
-                                    } else {
-                                        Image(systemName: "square")
-                                            .font(.largeTitle)
-                                    }
-                                }.foregroundColor(.gray)
-                                    .onTapGesture {
-                                        if receivers.contains(participant) {
-                                            receivers = receivers.filter {
-                                                $0 != participant
-                                            }
-                                        } else {
-                                            receivers.append(participant)
-                                        }
-                                    }
-                            }
-                        }
-                    }
-                }
-                .frame(maxHeight: 200)  // List의 높이 제한
-                .background(Color.white) // 배경색
-                .cornerRadius(8)
-                .shadow(radius: 5)  // 그림자 효과
-                .padding(.top)
-                .task {
-                    do {
-                        let projectResponse = try await get(url: "https://www.bestbirthday.co.kr:8080/api/project" + "/\(projectId)", responseType: Project.self)
-                        // Handle the response here
-                        print(projectResponse)
-                        
-                        projectData = projectResponse.data
-                    } catch {
-                        print("Error fetching data: \(error.localizedDescription)")
-                    }
-                }
-            }
-            
-            ZStack(alignment: .topLeading) {
-                // TextEditor
-                TextEditor(text: $title)
-                    .padding(10) // TextEditor 내부 여백
-                    .frame(maxWidth: 350, maxHeight: 50) // 크기 설정
-                    .background(Color.white) // 배경색 설정
-                    .cornerRadius(8) // 둥근 모서리
-                    .shadow(radius: 5) // 약간의 그림자 효과
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 8)
-                            .stroke(Color.gray, lineWidth: 1) // 테두리 스타일
-                    )
-                
-                // Placeholder
-                if title.isEmpty {
-                    Text("리퀘스트 제목")
-                        .foregroundColor(.customLightGray)
-                        .padding(.top, 20)
-                        .padding(.leading, 11)
-                }
-            }
-            
-            ZStack(alignment: .topLeading) {
-                // TextEditor
-                TextEditor(text: $content)
-                    .padding(10) // TextEditor 내부 여백
-                    .frame(maxWidth: 350, maxHeight: 200) // 크기 설정
-                    .background(Color.white) // 배경색 설정
-                    .cornerRadius(8) // 둥근 모서리
-                    .shadow(radius: 5) // 약간의 그림자 효과
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 8)
-                            .stroke(Color.gray, lineWidth: 1) // 테두리 스타일
-                    )
-                
-                // Placeholder
-                if content.isEmpty {
-                    Text("리퀘스트 설명")
-                        .foregroundColor(.customLightGray)
-                        .padding(.top, 20)
-                        .padding(.leading, 11)
-                }
-            }
+  var body: some View {
+    VStack(spacing: 20) {
+      requestModalHeader(inputData: $inputData)
+        .padding(.leading)
+        .padding(.trailing)
+        Divider()
+      
+      let projectName = projectListData?.projects.first(where: { $0.projectId == inputData.projectId })?.name ?? ""
+      requestProjectOptionRow(title: "프로젝트 선택", selectedItem: projectName, action: {isProjectsListVisible.toggle()})
+        .sheet(isPresented: $isProjectsListVisible) {
+          projectSheetView(projectListData: $projectListData, inputData: $inputData, isProjectsListVisible: $isProjectsListVisible)
+            .presentationDetents([.fraction(0.3), .medium]) // 콘텐츠 크기에 가까운 높이 제공
+            .presentationDragIndicator(.visible)
+          }
+      
+      let scheduleName = scheduleProjectData?.first(where: { $0.id == inputData.scheduleId })?.name ?? ""
+      requestProjectOptionRow(title: "일정 선택", selectedItem: scheduleName, action: {isScheduleListVisible.toggle()})
+        .sheet(isPresented: $isScheduleListVisible) {
+          scheduleSheetView(scheduleListData: $scheduleProjectData, inputData: $inputData, isScheduleListVisible: $isScheduleListVisible)
+            .presentationDetents([.fraction(0.3), .medium]) // 콘텐츠 크기에 가까운 높이 제공
+            .presentationDragIndicator(.visible)
         }
-        .modalPresentation()
-        .task {
-            do {
-                let projectListResponse = try await get(url: "https://www.bestbirthday.co.kr:8080/api/project/list?userId=1", responseType: ProjectList.self)
-                // 프로젝트 리스트 데이터를 업데이트
-                projectListData = projectListResponse.data
-            } catch {
-                print("Error fetching data: \(error.localizedDescription)")
-            }
+      
+      let receivers = inputData.receivers
+      receiverOptionRow(selectedItem: receivers, action: {isParticipantsListVisible.toggle()})
+        .sheet(isPresented: $isParticipantsListVisible) {
+          receiverSheetView(projectData: $projectData, inputData: $inputData, isParticipantListVisible: $isParticipantsListVisible)
+            .presentationDetents([.fraction(0.3), .medium]) // 콘텐츠 크기에 가까운 높이 제공
+            .presentationDragIndicator(.visible)
         }
-    }
+      
+      titleOptionRow(title: $inputData.title)
+      
+      commentOptionRow(content: $inputData.content)
+      
+      
+      }
+      .modalPresentation()
+      .task {
+        do {
+          let projectListResponse = try await get(url: "https://www.bestbirthday.co.kr:8080/api/project/list?userId=1", responseType: ProjectList.self)
+          // 프로젝트 리스트 데이터를 업데이트
+          projectListData = projectListResponse.data
+        } catch {
+          print("Error fetching data: \(error.localizedDescription)")
+        }
+      }
+  }
 }
 
 // 리퀘스트 거부 모달 컴포넌트
